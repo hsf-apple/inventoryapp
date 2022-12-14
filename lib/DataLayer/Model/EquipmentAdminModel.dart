@@ -18,6 +18,7 @@ class EquipmentAdminModel{
   String? certificateReportNo;
   String? dateReturned;
   String? location;
+  // String? userEmail;
 
   EquipmentAdminModel(
       {this.month,
@@ -35,7 +36,9 @@ class EquipmentAdminModel{
       this.physicalCondition,
       this.serialNo,
       this.status,
-      this.tagNo});
+      this.tagNo,
+      // this.userEmail
+  });
 
   Map<String, dynamic> toMap(){
     return{
@@ -55,6 +58,7 @@ class EquipmentAdminModel{
       'certificateReportNo': certificateReportNo,
       'dateReturned': dateReturned,
       'location': location,
+      // 'userEmail': userEmail,
     };
   }
 
@@ -76,7 +80,8 @@ class EquipmentAdminModel{
           physicalCondition: firestore.data()!['physicalCondition'],
           serialNo: firestore.data()!['serialNo'],
           status: firestore.data()!['status'],
-          tagNo: firestore.data()!['tagNo']
+          tagNo: firestore.data()!['tagNo'],
+
   );
 
   static EquipmentAdminModel fromJson(Map<String, dynamic> json) => EquipmentAdminModel(
@@ -95,6 +100,7 @@ class EquipmentAdminModel{
       physicalCondition: json['physicalCondition'],
       serialNo: json['serialNo'],
       status: json['status'],
-      tagNo: json['tagNo']
+      tagNo: json['tagNo'],
+      // userEmail: json['userEmail']
   );
 }

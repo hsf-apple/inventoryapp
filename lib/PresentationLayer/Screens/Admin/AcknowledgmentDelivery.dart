@@ -32,11 +32,11 @@ class _AcknowledgmentDelivery extends State<AcknowledgmentDelivery>{
           ),
           body: Container(
             margin: const EdgeInsets.all(8),
-            child: BlocProvider(
-              create: (context){
-                equipmentBloc.add(event)
-              },
-            ),
+            // child: BlocProvider(
+            //   create: (context){
+            //     equipmentBloc.add(event);
+            //   },
+            // ),
           ),
         ),
     );

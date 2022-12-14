@@ -47,3 +47,37 @@ class GetAcknowledgeDelivery extends EquipmentEvent{
 
 }
 
+/// user -----------------------------------
+
+/// get  equipment list for specific user
+class GetListEquipment extends EquipmentEvent{
+  const GetListEquipment();
+  @override
+  List<Object?> get props => [];
+}
+
+/// get  specific equipment AFTER user scan the qr code
+class GetSpecificEquipment extends EquipmentEvent{
+  final String equipmentName;
+  const GetSpecificEquipment(this.equipmentName);
+
+  @override
+  List<Object?> get props => [equipmentName];
+}
+
+/// get  specific equipment when user scan the qr code
+class GetSpecificEquipmentMainPageBool extends EquipmentEvent{
+  final String equipmentName;
+  const GetSpecificEquipmentMainPageBool(this.equipmentName);
+
+  @override
+  List<Object?> get props => [equipmentName];
+}
+
+/// save delivery form details to firestore
+class AddDeliveryForm extends EquipmentEvent{
+  final DeliveryModel deliveryModel;
+  const AddDeliveryForm(this.deliveryModel);
+  @override
+  List<Object?> get props => [deliveryModel];
+}

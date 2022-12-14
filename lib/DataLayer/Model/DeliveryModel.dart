@@ -14,6 +14,8 @@ class DeliveryModel{
   String? statusEquipment;
   String? referenceNo;
   String? acknowledgmentStatus;
+  String? userEmail;
+
 
   DeliveryModel(
       {this.date,
@@ -27,7 +29,8 @@ class DeliveryModel{
         this.physicalCondition,
         this.statusEquipment,
         this.referenceNo,
-        this.acknowledgmentStatus});
+        this.acknowledgmentStatus,
+      this.userEmail});
 
   Map<String, dynamic> toMap(){
     return{
@@ -43,6 +46,7 @@ class DeliveryModel{
       "statusEquipment": statusEquipment,
       "referenceNo": referenceNo,
       "acknowledgmentStatus": acknowledgmentStatus,
+      "userEmail":userEmail,
     };
   }
 
@@ -61,6 +65,7 @@ class DeliveryModel{
           statusEquipment: firestore.data()!['statusEquipment'],
           referenceNo: firestore.data()!['referenceNo'],
         acknowledgmentStatus: firestore.data()!["acknowledgmentStatus"],
+          userEmail: firestore.data()!['userEmail']
       );
 
   static DeliveryModel fromJson(Map<String, dynamic> json) => DeliveryModel(
@@ -76,5 +81,6 @@ class DeliveryModel{
       statusEquipment: json['statusEquipment'],
       referenceNo: json['referenceNo'],
       acknowledgmentStatus: json["acknowledgmentStatus"],
+      userEmail: json['userEmail']
   );
 }

@@ -6,9 +6,10 @@ class UserModel {
   String? email;
   String? userID;
   String? telNumber;
+  bool? isAdmin;
 
   UserModel(
-      {this.name, this.email, this.userID, this.telNumber});
+      {this.name, this.email, this.userID, this.telNumber,this.isAdmin});
 
   //save data to firebase
   Map<String, dynamic> toMap() {
@@ -17,6 +18,7 @@ class UserModel {
       'email': email,
       'userID': userID,
       'telNumber': telNumber,
+      'isAdmin' : isAdmin,
     };
   }
 
@@ -28,6 +30,7 @@ class UserModel {
         email: firestore.data()!['email'],
         userID: firestore.data()!['userID'],
         telNumber: firestore.data()!['telNumber'],
+        isAdmin: firestore.data()!['isAdmin'],
       );
 
   static UserModel fromJson(Map<String, dynamic> json) => UserModel(
@@ -35,6 +38,7 @@ class UserModel {
         email: json['email'],
         userID: json['userID'],
         telNumber: json['telNumber'],
+        isAdmin: json['isAdmin'],
       );
 }
 

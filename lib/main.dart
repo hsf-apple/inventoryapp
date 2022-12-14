@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventoryapp/PresentationLayer/Screens/Staff/BottomNavBar/NavBarStaff.dart';
 
 import 'BusinessLayer/AuthBloc/auth_bloc.dart';
 import 'DataLayer/Repository/AuthenticationRepository/AuthRepository.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
                       builder: (context, snapshot){
                         if(snapshot.connectionState == ConnectionState.done){
                           if(snapshot.hasData){
-                            return const AdminEquipmentForm();
+                            return checkUserDetails();
                           }else{
                             return Login();
                           }
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           ),
         )
     );
+
 
     // return RepositoryProvider(
     //   create: (context) => AuthRepository(),
@@ -87,4 +89,25 @@ class MyApp extends StatelessWidget {
       return null;
     }
   }
+}
+
+Widget checkUserDetails( ) {
+  return FutureBuilder(
+      future: checkUserStatus(),
+      builder: (context, userStatus) {
+        if (userStatus.hasData) {
+          switch (userStatus.data) {
+            case false:
+              {
+                return const NavBarStaff();
+              }
+            default:
+              {
+                // return const Navbar();
+                return Container();
+              }
+          }
+        }
+        return Container();
+      });
 }

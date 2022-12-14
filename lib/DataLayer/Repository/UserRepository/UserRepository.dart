@@ -11,6 +11,7 @@ class UserRepository {
       'email': userModel.email,
       'userID': userModel.userID,
       'telNumber': userModel.telNumber,
+      'isAdmin': false,
     });
     return;
   }
@@ -21,6 +22,7 @@ class UserRepository {
       'email': userModel.email,
       'telNumber': userModel.telNumber,
       'userID': userModel.userID,
+      'isAdmin': userModel.isAdmin,
     });
     return;
   }
@@ -28,4 +30,14 @@ class UserRepository {
   Future<DocumentSnapshot<Object?>> getSpecificUser(String email) async {
     return await db.doc(email).get();
   }
+
+  ///get data specific  user from Repository check if is user or not (Login.dart)
+  Future checkUser(String email) async {
+    var data;
+    await db.doc(email).get().then((value) => {data = value.data()});
+    bool userStatus = data["isAdmin"];
+    print("user status: $userStatus");
+    return userStatus;
+  }
+
 }

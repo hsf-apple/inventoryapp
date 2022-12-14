@@ -7,6 +7,7 @@ import 'package:inventoryapp/DataLayer/Repository/EquipmentRepository.dart';
 
 import '../../DataLayer/Model/DeliveryModel.dart';
 import '../../DataLayer/Model/EquipmentAdminModel.dart';
+import '../../DataLayer/Provider/EquipmentProver/EquipmentProvider.dart';
 
 part 'equipment_event.dart';
 part 'equipment_state.dart';
@@ -14,6 +15,7 @@ part 'equipment_state.dart';
 class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
   EquipmentBloc() : super(EquipmentInitial()) {
     final EquipmentRepository equipmentRepository = EquipmentRepository();
+    final EquipmentProvider equipmentProvider = EquipmentProvider();
 
     on<CreateEquipmentAdmin>((event, emit) async {
       await equipmentRepository.addEquipment(event.equipmentAdminModel);
@@ -34,9 +36,43 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
 
     on<GetAcknowledgeDelivery>((event, emit) async {
       emit(EquipmentLoading());
-      final listAcknowledge = await assignmentProvider.getAssignmentDateData(event.userId, event.dueDate);
-      emit(GetAssignmentState(listAssignment));
+      // final listAcknowledge = await assignmentProvider.getAssignmentDateData(event.userId, event.dueDate);
+      // emit(GetAssignmentState(listAssignment));
     });
     // create a provider to get the data from firstore
+
+///----------------------------user --------------------------------------
+
+    ///save data to database  when user add the delivery form
+    on<AddDeliveryForm>((event, emit) async {
+      await equipmentRepository.addDelivery(event.deliveryModel);
+    });
+
+    /// display list of Equipment for specific user
+    on<GetListEquipment>((event, emit) async {
+      var listEquipment = await equipmentProvider.fetchEquipmentListSpecificUser();
+      emit(ListEquipmentUserLoad(listEquipment));
+    });
+
+    /// display specific data from database
+    on<GetSpecificEquipment>((event, emit) async {
+      var listEquipment = await equipmentProvider.getSpecificEquipmentAfterQRCode(event.equipmentName);
+
+      emit(DisplaySpecificEquipmentQRCode(listEquipment));
+    });
+
+
+    on<GetSpecificEquipmentMainPageBool>((event, emit) async {
+      var listEquipment = await equipmentProvider.getSpecificEquipment(event.equipmentName);
+      if(await listEquipment.isEmpty)
+        {
+          emit(const StatusResultQRCodeLoaded(false));
+        }
+      else
+        {
+          emit(const StatusResultQRCodeLoaded(true));
+        }
+    });
+
   }
 }

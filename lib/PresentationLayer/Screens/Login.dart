@@ -1,10 +1,14 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../BusinessLayer/AuthBloc/auth_bloc.dart';
+import '../../DataLayer/Repository/UserRepository/UserRepository.dart';
 import '../Widget/curveWidget.dart';
 import 'Admin/AdminEquipmentForm.dart';
 import 'Register.dart';
+import 'Staff/BottomNavBar/NavBarStaff.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -16,6 +20,9 @@ class _Login extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+
+
 
   @override
 
@@ -43,10 +50,36 @@ class _Login extends State<Login> {
 
       ),
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is Authenticated) {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const AdminEquipmentForm()));//temporary home
+            /// Navigating to the dashboard screen if the user is authenticated
+            ///but if no internet connection
+            ///cant access this app
+            try {
+              bool result =
+              await InternetConnectionChecker().hasConnection;
+              if (result == true) {
+                await checkUserLogin(context);
+              } else {
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('No Internet Connection'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.pop(context, 'Cancel'),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            } catch (e) {}
           }
           if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -186,7 +219,7 @@ class _Login extends State<Login> {
   Widget _usernameField() {
     return TextFormField(
       controller: _emailController,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.white,
       ),
       decoration: const InputDecoration(
@@ -208,7 +241,7 @@ class _Login extends State<Login> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
-      style: TextStyle(
+      style:  const TextStyle(
         color: Colors.white,
       ),
       decoration:
@@ -219,8 +252,8 @@ class _Login extends State<Login> {
   Widget _loginButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const AdminEquipmentForm()));//temporary home
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => const AdminEquipmentForm()));//temporary home
       },
       style: ElevatedButton.styleFrom(
           primary: Colors.green,
@@ -238,4 +271,36 @@ class _Login extends State<Login> {
       );
     }
   }
+}
+
+
+///to check if user or admin
+checkUserLogin(context) async {
+
+  bool userStatus = await checkUserStatus();
+  switch (userStatus) {
+    case false:
+      {
+        print("user status if is true: $userStatus");
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) => const NavBarStaff()));
+      }
+      break;
+    default:
+      {
+        print("user status if is false: $userStatus");
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) => const AdminEquipmentForm()));
+      }
+  }
+
+}
+
+checkUserStatus() async {
+  String? email = FirebaseAuth.instance.currentUser?.email;
+  return UserRepository().checkUser(email!);
 }
