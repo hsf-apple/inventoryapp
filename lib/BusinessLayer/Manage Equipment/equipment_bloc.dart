@@ -23,6 +23,22 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
       await equipmentRepository.updateEquipment(event.equipmentAdminModel);
     });
 
+    on<DeleteEquipment>((event, emit) async{
+      await equipmentRepository.deleteEquipment(event.serialNo);
+    });
+
+    on<GetEquipmentAdmin>((event, emit) async {
+      emit(EquipmentLoading());
+      final listEquipment = await equipmentRepository.getEquipment();
+      emit(ListEquipmentAdminState(listEquipment));
+    });
+
+    on<GetSpecificEquipmentAdmin>((event, emit) async{
+      emit(EquipmentLoading());
+      final specificEquipment = await equipmentRepository.getSpecificEquipmentAdmin(event.serialNo);
+      emit(SpecificEquipmentLoaded(specificEquipment));
+    });
+
     //////////////////////////////////Delivery ////////////////////////////////
     on<CreateDelivery>((event, emit) async {
       await equipmentRepository.addDelivery(event.deliveryModel);
@@ -34,9 +50,14 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
 
     on<GetAcknowledgeDelivery>((event, emit) async {
       emit(EquipmentLoading());
-      final listAcknowledge = await assignmentProvider.getAssignmentDateData(event.userId, event.dueDate);
-      emit(GetAssignmentState(listAssignment));
+      final listAcknowledge = await equipmentRepository.getAcknowledgmentList();
+      emit(ListAcknowledgeDeliveryState(listAcknowledge));
     });
-    // create a provider to get the data from firstore
+
+    on<UpdateAcknowledgmentStatus>((event, emit) async {
+      await equipmentRepository.acknowledgmentDelivery(event.serialNo, event.acknowledgmentDelivery);
+    });
+
+
   }
 }

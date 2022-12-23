@@ -57,7 +57,26 @@ class EquipmentAdminModel{
       'location': location,
     };
   }
-
+  Map<String, dynamic> toJson(){
+    return{
+      "month": month,
+      "dateReceive": dateReceive,
+      'equipmentName': equipmentName,
+      'tagNo': tagNo,
+      'serialNo': serialNo,
+      'manufacturer': manufacturer,
+      'model': model,
+      'laboratoryWorks': laboratoryWorks,
+      'confirmationDate': confirmationDate,
+      'physicalCondition': physicalCondition,
+      'jobNo': jobNo,
+      'station': status,
+      'dueDate': dueDate,
+      'certificateReportNo': certificateReportNo,
+      'dateReturned': dateReturned,
+      'location': location,
+    };
+  }
   factory EquipmentAdminModel.fromFirestore(
       DocumentSnapshot<Map<String,dynamic>> firestore) =>
       EquipmentAdminModel(

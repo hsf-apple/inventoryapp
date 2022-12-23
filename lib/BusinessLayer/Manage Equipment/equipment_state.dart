@@ -22,10 +22,35 @@ class EquipmentLoaded extends EquipmentState{
   List<Object?> get props => [equipmentData];
 }
 
+class SpecificEquipmentLoaded extends EquipmentState{
+  final DocumentSnapshot<Object?> model;
+  const SpecificEquipmentLoaded(this.model);
+
+  @override
+  List<Object?> get props => [model];
+}
+
+class ListEquipmentAdminState extends EquipmentState{
+  final List<EquipmentAdminModel> model;
+  const ListEquipmentAdminState(this.model);
+
+  @override
+  List<Object?> get props => [model];
+}
+
 class DeliveryLoaded extends EquipmentState{
   final DocumentSnapshot<Object?> deliveryData;
   const DeliveryLoaded(this.deliveryData);
 
   @override
   List<Object?> get props => [deliveryData];
+}
+
+class ListAcknowledgeDeliveryState extends EquipmentState{
+  final List<DeliveryModel> model;
+  const ListAcknowledgeDeliveryState(this.model);
+
+  @override
+  List<Object?> get props => [model];
+
 }

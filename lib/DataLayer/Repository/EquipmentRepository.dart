@@ -48,8 +48,33 @@ class EquipmentRepository{
     return;
   }
 
+  Future<void> deleteEquipment(String serialNo) async{
+    return await equipmentAdminDB.doc(serialNo).delete();
+  }
+
+  Future<DocumentSnapshot<Object?>> getSpecificEquipmentAdmin(String serialNo) async {
+    return await equipmentAdminDB.doc(serialNo).get();
+  }
+
+  Future<List<EquipmentAdminModel>> getEquipment() async{
+    List<EquipmentAdminModel> equipmentList = [];
+
+    try{
+      final value = await FirebaseFirestore.instance.collection("equipmentAdmin").get();
+
+      for(var value in value.docs){
+        equipmentList.add(EquipmentAdminModel.fromJson(value.data()));
+      }
+      return equipmentList;
+    } on FirebaseException catch (e){
+      return equipmentList;
+    } catch (e){
+      throw Exception(e.toString());
+    }
+  }
+
   ///////////////////////////// Delivery /////////////////////////////////////
-  CollectionReference deliveryDB = FirebaseFirestore.instance.collection("delivery");
+  CollectionReference deliveryDB = FirebaseFirestore.instance.collection("DeliveryForm");
 
   Future<void> addDelivery(DeliveryModel deliveryModel) async{
     await deliveryDB.doc(deliveryModel.serialNo).set({
@@ -87,10 +112,31 @@ class EquipmentRepository{
     return;
   }
 
-  Future<void> acknowledgmentDelivery(DeliveryModel deliveryModel) async{
-    await deliveryDB.doc(deliveryModel.serialNo).update({
-      "acknowledgmentStatus": deliveryModel.acknowledgmentStatus,
+  Future<void> acknowledgmentDelivery(String serialNo, String acknowledgmentStatus) async{
+    await deliveryDB.doc(serialNo).update({
+      "acknowledgmentStatus": acknowledgmentStatus,
     });
     return;
+  }
+
+  Future<List<DeliveryModel>> getAcknowledgmentList() async{
+    List<DeliveryModel> deliveryList = [];
+
+    try{
+      final value = await FirebaseFirestore.instance.collection("DeliveryForm").get();
+
+      for(var value in value.docs){
+        var detail = value.data();
+
+        if(detail['acknowledgmentStatus'] == "Pending"){
+          deliveryList.add(DeliveryModel.fromJson(value.data()));
+        }
+      }
+      return deliveryList;
+    } on FirebaseException catch (e){
+      return deliveryList;
+    } catch (e){
+      throw Exception(e.toString());
+    }
   }
 }
