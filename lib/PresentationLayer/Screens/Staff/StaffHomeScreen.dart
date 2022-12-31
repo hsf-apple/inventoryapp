@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventoryapp/PresentationLayer/Screens/Staff/DeliveryDetails/DeliveryDetailsStaff.dart';
 import 'package:inventoryapp/PresentationLayer/Screens/Login.dart';
 
 import '../../../BusinessLayer/AuthBloc/auth_bloc.dart';
 import '../../../BusinessLayer/Manage Delivery/delivery_bloc.dart';
 import '../../../BusinessLayer/Manage Equipment/equipment_bloc.dart';
+import '../../../DataLayer/Repository/EquipmentRepository.dart';
 import 'QR code Successful Screen/DisplayEquipmentDetails.dart';
 
 class StaffHomeScreen extends StatefulWidget {
@@ -17,6 +20,7 @@ class StaffHomeScreen extends StatefulWidget {
 }
 
 class _State extends State<StaffHomeScreen> {
+
   final EquipmentBloc equipmentBloc = EquipmentBloc();
   DeliveryBloc deliveryBloc = DeliveryBloc();
   String _scanBarcode = 'Unknown';
@@ -28,7 +32,6 @@ class _State extends State<StaffHomeScreen> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -84,7 +87,6 @@ class _State extends State<StaffHomeScreen> {
             providers: [
               BlocProvider<EquipmentBloc>(create: (context) => equipmentBloc),
               BlocProvider<DeliveryBloc>(create: (context) => deliveryBloc),
-
             ],
             child: MultiBlocListener( listeners: [
               BlocListener<AuthBloc, AuthState>(
@@ -102,7 +104,7 @@ class _State extends State<StaffHomeScreen> {
                   listener: (context, state) async {
                     if (state is StatusResultQRCodeLoaded) {
                       ///return true if user  scan a right qr code
-                      print("check if true or not for bloc listener");
+
                       if(state.value == true)
                         {
                           Navigator.of(context, rootNavigator: true)
@@ -111,32 +113,29 @@ class _State extends State<StaffHomeScreen> {
                             arguments: {"title": _scanBarcode},
                           )));
                         }
+                      else
+                        {
+
+                        }
                     }
                   })
-            ]
-               , child:BlocBuilder<DeliveryBloc, DeliveryState>(
-                builder: (context, state) {
-                   if (state is ListEquipmentUserLoadDelivery) {
-                    //select based on category
-                    var pendingStatus = state.equipmentModel
-                        .where((element) => element.acknowledgmentStatus == 'Pending')
-                        .toList();
-                    var deniedStatus = state.equipmentModel
-                        .where((element) => element.acknowledgmentStatus == 'Denied')
-                        .toList();
-                    var approveStatus = state.equipmentModel
-                        .where((element) => element.acknowledgmentStatus == 'Approve')
-                        .toList();
+            ],
+            child: StreamBuilder<QuerySnapshot>(stream:EquipmentRepository().dataStream(),
+              builder: (context, snapshot) {
+              if (!snapshot.hasData) return const LinearProgressIndicator();
 
-                    return _uI(context, pendingStatus, deniedStatus, approveStatus,screenHeight);
-                  } else if (state is EquipmentError) {
-                     print('error');
-                    return Container();
-                  } else {
-                     print('null');
-                    return  Container();
-                  }
-                }) ),
+              ///pending
+              List<DocumentSnapshot> pendingStatus = snapshot.data!.docs.where((snapshot) => snapshot['acknowledgmentStatus'] == 'Pending').toList();
+              ///pending
+              List<DocumentSnapshot> deniedStatus = snapshot.data!.docs.where((snapshot) => snapshot['acknowledgmentStatus'] == 'Denied').toList();
+              ///pending
+              List<DocumentSnapshot> approveStatus = snapshot.data!.docs.where((snapshot) => snapshot['acknowledgmentStatus'] == 'Approved').toList();
+
+              return _uI(context, pendingStatus, deniedStatus, approveStatus,screenHeight);
+
+            }, ),
+
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -161,9 +160,16 @@ Widget _uI(BuildContext context, pendingStatus, deniedStatus, approveStatus,scre
       Column(
         children: <Widget>[
           SizedBox(
-            height: screenHeight * 0.20, // 20% of the screen height
+            // height: screenHeight * 0.20, // 20% of the screen height
             child: Card(
               child: ExpansionTile(
+                onExpansionChanged: (expanded) {
+                  if (expanded) {
+                    // The ExpansionTile is currently expanded.
+                  } else {
+                    // The ExpansionTile is currently collapsed.
+                  }
+                },
                 textColor: const Color.fromARGB(255, 24, 191, 161),
                 title: const Text(
                   'Pending',
@@ -176,10 +182,48 @@ Widget _uI(BuildContext context, pendingStatus, deniedStatus, approveStatus,scre
               ),
             ),
           ),
+          // Flex(
+          //   direction: Axis.horizontal,
+          //   children: [
+          //     Expanded(
+          //       // flex: 0, // Set the flex property to 0 to maintain the fixed size of the Container
+          //       child: SizedBox(
+          //         // height: screenHeight * 0.20, // 20% of the screen height
+          //         child: Card(
+          //           child: ExpansionTile(
+          //             onExpansionChanged: (expanded) {
+          //               if (expanded) {
+          //                 // The ExpansionTile is currently expanded.
+          //               } else {
+          //                 // The ExpansionTile is currently collapsed.
+          //               }
+          //             },
+          //             textColor: const Color.fromARGB(255, 24, 191, 161),
+          //             title: const Text(
+          //               'Pending',
+          //               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          //             ),
+          //             subtitle: const Text(''),
+          //             children: <Widget>[
+          //               expansion(context, pendingStatus),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     Expanded(
+          //       // flex: 1, // The second child of the Flex widget will take up the remaining space
+          //       child: Container(
+          //         color: Colors.green,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+
 
           ///pending
           SizedBox(
-            height: screenHeight * 0.20, // 20% of the screen height
+            // height: screenHeight * 0.20, // 20% of the screen height
             child:Card(
               child: ExpansionTile(
                 textColor: const Color.fromARGB(255, 24, 191, 161),
@@ -195,9 +239,9 @@ Widget _uI(BuildContext context, pendingStatus, deniedStatus, approveStatus,scre
             )
           ),
 
-          ///denied
+          ///Approve
           SizedBox(
-            height: screenHeight * 0.20, // 20% of the screen height
+            // height: screenHeight * 0.20, // 20% of the screen height
             child: Card(
               child: ExpansionTile(
                 textColor: const Color.fromARGB(255, 24, 191, 161),
@@ -220,12 +264,14 @@ Widget _uI(BuildContext context, pendingStatus, deniedStatus, approveStatus,scre
   );
 }
 
-Widget expansion(BuildContext context, dataCategory) {
+
+
+Widget expansion(BuildContext context,List<DocumentSnapshot> dataCategory) {
   return SingleChildScrollView(
     child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: dataCategory == null ? 0 : dataCategory.length,
+        itemCount: dataCategory.length ?? 0,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
@@ -250,6 +296,32 @@ Widget expansion(BuildContext context, dataCategory) {
               //             dataCategory[index].drugId.toString(),
               //           },
               //         )));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DeliveryDetailsStaff(),
+                      settings: RouteSettings(
+                        arguments: {
+                          "month": dataCategory[index].get("month"),
+                          "date": dataCategory[index].get("date"),
+                          "designationPIC": dataCategory[index].get("designationPIC"),
+                          "location": dataCategory[index].get("location"),
+                          "tagNo": dataCategory[index].get("tagNo"),
+                          "equipmentName": dataCategory[index].get("equipmentName"),
+                          "serialNo": dataCategory[index].get("serialNo"),
+                          "model": dataCategory[index].get("model"),
+                          "transportationMode": dataCategory[index].get("transportationMode"),
+                          "transportationFirstDescription": dataCategory[index].get("transportationFirstDescription"),
+                          "physicalCondition": dataCategory[index].get("physicalCondition"),
+                          "statusEquipment": dataCategory[index].get("statusEquipment"),
+                          "referenceNo": dataCategory[index].get("referenceNo"),
+                          "acknowledgmentStatus": dataCategory[index].get("acknowledgmentStatus"),
+                          "acknowledgmentReceipt": dataCategory[index].get("acknowledgmentReceipt"),
+                          "acknowledgmentReceiptName":dataCategory[index].get("acknowledgmentReceiptName"),
+                          "acknowledgmentReceiptDate":dataCategory[index].get("acknowledgmentReceiptDate"),
+                          "userEmail": dataCategory[index].get("userEmail"),
+                        },
+                      )));
             },
             child: Card(
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -269,14 +341,14 @@ Widget expansion(BuildContext context, dataCategory) {
                             Padding(
                               padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Text(
-                                dataCategory[index].equipmentName,
+                                dataCategory[index].get('equipmentName'),
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 8, right: 8),
-                              child: Text(dataCategory[index].serialNo),
+                              child: Text(dataCategory[index].get('serialNo'),),
                             )
                           ],
                         ),
@@ -290,3 +362,4 @@ Widget expansion(BuildContext context, dataCategory) {
         }),
   );
 }
+

@@ -1,20 +1,25 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventoryapp/BusinessLayer/Manage%20Equipment/equipment_bloc.dart';
-import 'package:inventoryapp/DataLayer/Model/EquipmentAdminModel.dart';
 
 import '../../../BusinessLayer/AuthBloc/auth_bloc.dart';
 import '../../../DataLayer/Model/DeliveryModel.dart';
+import '../../Service/Notification.dart';
 
-class AdminEquipmentForm extends StatefulWidget{
-  const AdminEquipmentForm({Key? key}) : super(key: key);
+class StaffEquipmentForm extends StatefulWidget{
+  const StaffEquipmentForm({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _AdminEquipmentForm();
+  State<StatefulWidget> createState() => _StaffEquipmentForm();
 
 }
 
-class _AdminEquipmentForm extends State<AdminEquipmentForm>{
+class _StaffEquipmentForm extends State<StaffEquipmentForm>{
+  final notifications = AwesomeNotifications();
 
   final EquipmentBloc equipmentBloc = EquipmentBloc();
   final _formKey = GlobalKey<FormState>();
@@ -27,17 +32,28 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
   final TextEditingController _model = TextEditingController();
   final TextEditingController _referenceNo = TextEditingController();
 
-  String _transportaionFirst = "Yes";
-  String _statusFirst = "Good";
-  String _physicalConditionFirst = "Good";
-  final String _acknowledgmentStatus = "pending";
+  final TextEditingController _transportationFirstDescription = TextEditingController();
+
+  String _transportaionFirst = "By Hand";
+  String _statusFirst = "Functioning Send for Calibration";
+  String _physicalConditionFirst = "Good and Complete with Accessories";
+
+
+
+  String _currentMonth = "";
+
+  final String _acknowledgmentStatus = "Pending";
+
+
+  /// date
+  String returnDate ="";
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Add Course Work"),
+          title: const Text("Add Delivery Form"),
           centerTitle: true,
           actions: <Widget>[
             TextButton(
@@ -71,7 +87,13 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                     dateField(),
+                     monthField(),
+                      const SizedBox(height: 15),
+                      dateField(),
+                      const SizedBox(height: 15),
+                      transportationModeField(),
+                      const SizedBox(height: 15),
+                      transportationDescriptionField(),
                       const SizedBox(height: 15),
                       designationPICField(),
                       const SizedBox(height: 15),
@@ -85,13 +107,9 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
                       const SizedBox(height: 15),
                       modelField(),
                       const SizedBox(height: 15),
-                      transportationModeField(),
-                      const SizedBox(height: 15),
                       physicalConditionField(),
                       const SizedBox(height: 15),
                       statusEquipmentField(),
-                      const SizedBox(height: 15),
-                      referenceNoField(),
                       const SizedBox(height: 15),
                       Material(
                         elevation: 8,
@@ -112,8 +130,12 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
                             onPressed: () async{
                               if(_formKey.currentState!.validate()){
 
+                                _formKey.currentState!.save();
+
+                                String? email = FirebaseAuth.instance.currentUser?.email;
                                 DeliveryModel deliveryModel = DeliveryModel(
-                                  date: _date.text,
+                                  date: returnDate,
+                                  month:_currentMonth,
                                   designationPIC: _designationPIC.text,
                                   location: _location.text,
                                   equipmentName: _equipmentName.text,
@@ -123,19 +145,23 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
                                   transportationMode: _transportaionFirst,
                                   physicalCondition: _physicalConditionFirst,
                                   statusEquipment: _statusFirst,
-                                  referenceNo: _referenceNo.text,
+                                  referenceNo: "",
                                   acknowledgmentStatus: _acknowledgmentStatus,
+                                    userEmail: email,
+                                  transportationFirstDescription: _transportationFirstDescription.text,
                                 );
 
                                 equipmentBloc.add(CreateDelivery(deliveryModel));
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Data Added Successfully'),
-                                      backgroundColor: Colors.green,
-                                    )
-                                );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     const SnackBar(content: Text('Data Added Successfully'),
+                                //       backgroundColor: Colors.green,
+                                //     )
+                                // );
                                 //Active when finish home page
                                 //Navigator.of(context).pop();
+                                // Create a notification after the form is submitted
+                                sendQueryReminderNotification(deliveryModel);
 
 
                               }
@@ -165,20 +191,96 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
 
   //////////////////////Text Field///////////////////////////
 
-  Widget dateField(){
-    return TextFormField(
-      controller: _date,
-      validator: (value){
-        if (value == null || value.isEmpty) {
-          return 'Please enter the field';
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        label: Text('Date'),
-      ),
+  Widget monthField(){
+    String month = DateFormat.MMMM().format(DateTime.now());
+
+    return DropdownButtonFormField(
+        validator: (value) {
+          if (value == null) {
+            return 'Please enter valid month';
+          }
+          return null;
+        },
+        decoration: const InputDecoration(
+          label: Text('Month'),
+        ),
+        value: month,
+        elevation: 16,
+        items: <String>['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (String? newValue){
+          setState(() {
+            _currentMonth = newValue!;
+          });
+        },
+        onSaved: (newValue) => _currentMonth =newValue! ,
     );
+
+    // return DateTimePicker(
+    //   initialDate: returnDateInitial,
+    //   type: DateTimePickerType.date,
+    //   firstDate: DateTime(2000),
+    //   lastDate: DateTime(2100),
+    //   decoration: const InputDecoration(
+    //     border: UnderlineInputBorder(),
+    //     labelText: "Start Date",
+    //   ),
+    //   dateLabelText: 'Return Date',
+    //   // onChanged: (val) => print(val),
+    //   validator: (value) {
+    //     if (value == null) {
+    //       return 'Please enter date to return the equipments';
+    //     }
+    //     return null;
+    //   },
+    //   onSaved: (val) => returnDate = val!,
+    // );
+
+    // return TextFormField(
+    //   controller: _date,
+    //   validator: (value){
+    //     if (value == null || value.isEmpty) {
+    //       return 'Please enter the field';
+    //     }
+    //     return null;
+    //   },
+    //   decoration: const InputDecoration(
+    //     label: Text('Date'),
+    //   ),
+    // );
   }
+  DateTime returnDateInitial = DateTime.now();
+  Widget dateField()
+  {
+  return DateTimePicker(
+  initialDate: returnDateInitial,
+  type: DateTimePickerType.date,
+  firstDate: DateTime(2000),
+  lastDate: DateTime(2100),
+  decoration: const InputDecoration(
+  border: UnderlineInputBorder(),
+  labelText: "Date",
+  ),
+  dateLabelText: 'Date',
+  // onChanged: (val) => print(val),
+  validator: (value) {
+  if (value == null) {
+  return 'Please enter date to return the equipments';
+  }
+  return null;
+  },
+  onSaved: (val) => returnDate = val!,
+  );
+  }
+
+
+
+
   Widget equipmentNameField(){
     return TextFormField(
       controller: _equipmentName,
@@ -255,16 +357,16 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
     return DropdownButtonFormField(
         validator: (value) {
           if (value == null) {
-            return 'Please enter valid status';
+            return 'Please enter valid transportation ';
           }
           return null;
         },
         decoration: const InputDecoration(
-          label: Text('Course Assessment Type'),
+          label: Text('Transportation Mode'),
         ),
         value: _transportaionFirst,
         elevation: 16,
-        items: <String>['Yes', 'No']
+        items: <String>['By Hand', 'Courier']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -279,9 +381,43 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
     );
   }
 
+  Widget transportationDescriptionField()
+  {
+    switch(_transportaionFirst) {
+      case "Courier":
+        return TextFormField(
+          controller: _transportationFirstDescription,
+          validator: (value){
+            if (value == null || value.isEmpty) {
+              return 'Please enter the field';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            label: Text('Consignment Note No'),
+          ),
+        );
+        break;
+      default:
+        return TextFormField(
+          controller: _transportationFirstDescription,
+          validator: (value){
+            if (value == null || value.isEmpty) {
+              return 'Please enter the field';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            label: Text('Name'),
+          ),
+        );
+    }
+  }
+
   Widget statusEquipmentField(){
 
     return DropdownButtonFormField(
+      isExpanded: true,
         validator: (value) {
           if (value == null) {
             return 'Please enter valid status';
@@ -293,7 +429,7 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
         ),
         value: _statusFirst,
         elevation: 16,
-        items: <String>['Good', 'OK', 'Bad']
+        items: <String>['Functioning Send for Calibration', 'Not Functioning Send for Repair', 'Not Functioning Send for Repair and Calibration']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -313,16 +449,16 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
     return DropdownButtonFormField(
         validator: (value) {
           if (value == null) {
-            return 'Please enter valid status';
+            return 'Please enter valid value';
           }
           return null;
         },
         decoration: const InputDecoration(
-          label: Text('Course Assessment Type'),
+          label: Text('Physical Condition'),
         ),
         value: _physicalConditionFirst,
         elevation: 16,
-        items: <String>['Good', 'OK', 'Bad']
+        items: <String>['Good and Complete with Accessories', 'Good and without Accessories']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

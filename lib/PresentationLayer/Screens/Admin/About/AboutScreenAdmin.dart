@@ -1,24 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:huawei_safetydetect/huawei_safetydetect.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:huawei_safetydetect/huawei_safetydetect.dart';
+import 'package:inventoryapp/PresentationLayer/Screens/Admin/About/Password/AdminChangePasswordScreen.dart';
+import 'package:inventoryapp/PresentationLayer/Screens/Admin/About/Profile/AdminProfileScreen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../../../BusinessLayer/AuthBloc/auth_bloc.dart';
 import '../../Login.dart';
-import 'Password/ChangePasswordPage.dart';
-import 'Profile Page/ProfilePage.dart';
 
-class AboutScreen extends StatefulWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+class AboutScreenAdmin extends StatefulWidget {
+  const AboutScreenAdmin({Key? key}) : super(key: key);
 
   @override
-  State<AboutScreen> createState() => _AboutScreenState();
+  State<AboutScreenAdmin> createState() => _AboutScreenAdminState();
 }
 
-class _AboutScreenState extends State<AboutScreen> {
+class _AboutScreenAdminState extends State<AboutScreenAdmin> {
 
   getMaliciousAppsList(BuildContext context) {
     runZoned(() async {
@@ -110,7 +111,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  const ProfilePage()),
+                    MaterialPageRoute(builder: (context) =>  const AdminProfileScreen()),
 
                   );
                 },
@@ -132,7 +133,7 @@ class _AboutScreenState extends State<AboutScreen> {
           ), ),
 
       ),
-        
+
       ),
     );
   }
@@ -163,7 +164,7 @@ class _AboutScreenState extends State<AboutScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                               const Login()),
+                              const Login()),
                               (Route<dynamic> route) => false);
                     },
                     child: const Text('YES', style: TextStyle(color: Colors.black),),
@@ -186,7 +187,7 @@ Widget userListView(providerID,context)
       onTap: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>  const ChangePassword()),
+          MaterialPageRoute(builder: (context) =>  const AdminChangePasswordScreen()),
 
         );
       },

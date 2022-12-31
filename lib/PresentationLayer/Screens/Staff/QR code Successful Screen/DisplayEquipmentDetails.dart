@@ -6,7 +6,7 @@ import 'package:line_icons/line_icons.dart';
 
 import '../../../../BusinessLayer/Manage Equipment/equipment_bloc.dart';
 import '../../../Widget/CurveWidgetStaff.dart';
-import '../StaffHomeScreen.dart';
+import '../DeliveryForm.dart';
 
 class DisplayEquipmentDetails extends StatefulWidget {
   const DisplayEquipmentDetails({Key? key}) : super(key: key);
@@ -449,7 +449,7 @@ Widget successfulMessage(context)
 Widget checkCalibrationExpiredButton(context,String  dueDateCalibration )
 {
   // Define the format of the input string
-  DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+  DateFormat dateFormat = DateFormat('yyyy-MM-dd');
 
 // Parse the date string and create a DateTime object
   DateTime dateTime = dateFormat.parse(dueDateCalibration);
@@ -478,6 +478,10 @@ Widget checkCalibrationExpiredButton(context,String  dueDateCalibration )
           ),
         ),
         onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const StaffEquipmentForm()),
+          );
 
         },
         child: const Text(

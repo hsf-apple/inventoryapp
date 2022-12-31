@@ -21,5 +21,12 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       var listEquipment = await equipmentProvider.fetchEquipmentListSpecificUser();
       emit(ListEquipmentUserLoadDelivery(listEquipment));
     });
+
+    /// display list of Equipment for admin ( acknowledgment Status = "Pending")
+    on<GetListEquipmentDeliveryAdmin>((event, emit) async {
+      var listEquipment = await equipmentProvider.getAllListDeliveryStatusForAdmin();
+      emit(ListEquipmentDeliveryAdminLoad(listEquipment));
+    });
+
   }
 }

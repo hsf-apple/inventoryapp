@@ -10,3 +10,10 @@ class GetListEquipmentDelivery extends DeliveryEvent{
   @override
   List<Object?> get props => [];
 }
+
+/// get  equipment list for admin (acknowledgment status == pending)
+class GetListEquipmentDeliveryAdmin extends DeliveryEvent{
+  const GetListEquipmentDeliveryAdmin();
+  @override
+  List<Object?> get props => [];
+}

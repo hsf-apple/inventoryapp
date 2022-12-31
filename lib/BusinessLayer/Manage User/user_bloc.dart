@@ -25,7 +25,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<GetUser>((event, emit) async {
       emit(UserLoading());
       final userdata = await userRepository.getSpecificUser(event.email);
-      emit(UserLoaded(userdata));
+      emit(UserLoaded(userdata!));
     });
   }
 }

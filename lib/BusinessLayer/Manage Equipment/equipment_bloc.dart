@@ -22,7 +22,21 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
     });
 
     on<UpdateEquipmentAdmin>((event, emit) async{
-      await equipmentRepository.updateEquipment(event.equipmentAdminModel);
+      await equipmentRepository.updateEquipment(event.equipmentAdminModel, event.serialNoValue);
+    });
+
+    /// display list of Equipment for admin
+    on<GetListEquipmentAdmin>((event, emit) async {
+      var listEquipment = await equipmentProvider.fetchEquipmentListAdmin();
+      emit(ListEquipmentLoadAdmin(listEquipment));
+    });
+
+    ///delete specific equipment for admin
+    on<DeleteEquipmentAdmin>((event, emit) async {
+      await equipmentProvider.deleteEquipmentAdmin(event.serialNo);
+
+      var listEquipment = await equipmentProvider.fetchEquipmentListAdmin();
+      emit(ListEquipmentLoadAdmin(listEquipment));
     });
 
     //////////////////////////////////Delivery ////////////////////////////////
@@ -63,15 +77,38 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
 
 
     on<GetSpecificEquipmentMainPageBool>((event, emit) async {
-      var listEquipment = await equipmentProvider.getSpecificEquipment(event.equipmentName);
-      if(await listEquipment.isEmpty)
-        {
-          emit(const StatusResultQRCodeLoaded(false));
-        }
-      else
-        {
+
+
+      bool checkEquipment = await EquipmentRepository().checkSpecificEquipment(event.equipmentName);
+
+
+      switch(checkEquipment) {
+        case true:
           emit(const StatusResultQRCodeLoaded(true));
-        }
+          break;
+        default:
+          emit(const StatusResultQRCodeLoaded(false));
+      }
+
+      //
+      // if(event.equipmentName == "Unknown")
+      // {
+      //   emit(const StatusResultQRCodeLoaded(false));
+      // }
+      // else
+      // {
+      //   var listEquipment = equipmentProvider.getSpecificEquipment(event.equipmentName);
+      //   if(await listEquipment.isEmpty)
+      //   {
+      //     emit(const StatusResultQRCodeLoaded(false));
+      //   }
+      //   else
+      //   {
+      //     emit(const StatusResultQRCodeLoaded(true));
+      //   }
+      // }
+
+
     });
 
   }

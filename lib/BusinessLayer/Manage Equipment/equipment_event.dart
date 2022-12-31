@@ -14,7 +14,8 @@ class CreateEquipmentAdmin extends EquipmentEvent{
 
 class UpdateEquipmentAdmin extends EquipmentEvent{
   final EquipmentAdminModel equipmentAdminModel;
-  const UpdateEquipmentAdmin(this.equipmentAdminModel);
+  final String serialNoValue;
+  const UpdateEquipmentAdmin(this.equipmentAdminModel, this.serialNoValue);
 
   @override
   List<Object?> get props => [equipmentAdminModel];
@@ -65,6 +66,7 @@ class GetSpecificEquipment extends EquipmentEvent{
   List<Object?> get props => [equipmentName];
 }
 
+
 /// get  specific equipment when user scan the qr code
 class GetSpecificEquipmentMainPageBool extends EquipmentEvent{
   final String equipmentName;
@@ -80,4 +82,18 @@ class AddDeliveryForm extends EquipmentEvent{
   const AddDeliveryForm(this.deliveryModel);
   @override
   List<Object?> get props => [deliveryModel];
+}
+
+///----------------------admin-------------
+class GetListEquipmentAdmin extends EquipmentEvent{
+  const GetListEquipmentAdmin();
+  @override
+  List<Object?> get props => [];
+}
+
+class DeleteEquipmentAdmin extends EquipmentEvent{
+  final String serialNo;
+  const DeleteEquipmentAdmin(this.serialNo);
+  @override
+  List<Object?> get props => [serialNo];
 }

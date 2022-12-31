@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventoryapp/PresentationLayer/Screens/Staff/BottomNavBar/NavBarStaff.dart';
 
 import 'BusinessLayer/AuthBloc/auth_bloc.dart';
+import 'BusinessLayer/Manage Equipment/equipment_bloc.dart';
 import 'DataLayer/Repository/AuthenticationRepository/AuthRepository.dart';
-import 'PresentationLayer/Screens/Admin/AdminEquipmentForm.dart';
+import 'PresentationLayer/Screens/Admin/BottomNavBar/NavBarAdmin.dart';
+import 'PresentationLayer/Screens/Admin/EquipementAdmin/EquipementAdd.dart';
+import 'PresentationLayer/Screens/Admin/EquipementAdmin/EquipementList.dart';
 import 'PresentationLayer/Screens/Login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  //for notification initialize
+  AwesomeNotifications().initialize(
+    'resource://drawable/appicon',
+    [
+      NotificationChannel(
+        channelKey: 'scheduled_channel',
+        channelName: 'Scheduled Notifications',
+        defaultColor: Colors.blue,
+        locked: true,
+        importance: NotificationImportance.High,
+        channelDescription: 'Notification',
+      ),
+    ],
+  );
   runApp(const MyApp());
 }
 
@@ -30,6 +49,7 @@ class MyApp extends StatelessWidget {
             authRepository: RepositoryProvider.of<AuthRepository>(context),
           ),
           child: MaterialApp(
+
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primaryColor: Colors.green,
@@ -45,7 +65,7 @@ class MyApp extends StatelessWidget {
                           if(snapshot.hasData){
                             return checkUserDetails();
                           }else{
-                            return Login();
+                            return const Login();
                           }
                         }else{
                           return Container(decoration: const BoxDecoration(
@@ -55,30 +75,13 @@ class MyApp extends StatelessWidget {
                       }
                   );
                 }
-                return Login();
+                return const Login();
               },
             ),
           ),
         )
     );
 
-
-    // return RepositoryProvider(
-    //   create: (context) => AuthRepository(),
-    //   child: BlocProvider(
-    //     create: (context) => AuthBloc(
-    //       authRepository: RepositoryProvider.of<AuthRepository>(context),
-    //     ),
-    //     child: MaterialApp(
-    //       debugShowCheckedModeBanner: false ,
-    //       title: 'Self-Task Student',
-    //       theme: ThemeData(
-    //         primaryColor: Colors.green,
-    //       ),
-    //       home: Login(),
-    //     ),
-    //   ),
-    // );
   }
 
   Future<bool?> internetCheck() async {
@@ -104,7 +107,7 @@ Widget checkUserDetails( ) {
             default:
               {
                 // return const Navbar();
-                return Container();
+                return const NavBarAdmin();
               }
           }
         }

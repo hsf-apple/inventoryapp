@@ -6,12 +6,12 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../BusinessLayer/AuthBloc/auth_bloc.dart';
 import '../../DataLayer/Repository/UserRepository/UserRepository.dart';
 import '../Widget/curveWidget.dart';
-import 'Admin/AdminEquipmentForm.dart';
+import 'Admin/BottomNavBar/NavBarAdmin.dart';
 import 'Register.dart';
 import 'Staff/BottomNavBar/NavBarStaff.dart';
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
   @override
   _Login createState() => _Login();
 }
@@ -37,10 +37,10 @@ class _Login extends State<Login> {
         actions: <Widget>[
           TextButton(
             style: TextButton.styleFrom(
-              primary: Colors.white,
+              foregroundColor: Colors.white,
             ),
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context, MaterialPageRoute(builder: (context) => const Register()));
             },
             child: const Text("Register"),
@@ -294,7 +294,7 @@ checkUserLogin(context) async {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (_) => const AdminEquipmentForm()));
+                builder: (_) => const NavBarAdmin()));
       }
   }
 

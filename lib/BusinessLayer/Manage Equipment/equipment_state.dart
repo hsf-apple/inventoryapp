@@ -41,6 +41,8 @@ class ListEquipmentUserLoad extends EquipmentState{
   List<Object?> get props => [equipmentModel];
 }
 
+
+
 /// get  specific equipment when user scan the qr code
 class DisplaySpecificEquipmentQRCode extends EquipmentState{
   final  specificEquipmentDetails;
@@ -65,4 +67,15 @@ class StatusResultQRCodeLoaded extends EquipmentState
 
   @override
   List<Object> get props => [value];
+}
+
+///-------------------admin--------------
+
+
+/// get  equipment list for admin
+class ListEquipmentLoadAdmin extends EquipmentState{
+  final List<EquipmentAdminModel> equipmentModel;
+  const ListEquipmentLoadAdmin(this.equipmentModel);
+  @override
+  List<Object?> get props => [equipmentModel];
 }

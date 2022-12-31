@@ -1,5 +1,3 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../BusinessLayer/AuthBloc/auth_bloc.dart';
@@ -39,28 +37,12 @@ class _Register extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: <Color>[Colors.blue, Colors.green]),
-          ),
-        ),
-        title: Text('Register'),
+        backgroundColor: Colors.white,
+        leading:const BackButton(color: Colors.black),
+
+        title: const Text('Register', style: TextStyle(color: Colors.black),),
         centerTitle: true,
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              primary: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Login()));
-            },
-            child: const Text("Login"),
-          )
-        ],
+
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -88,68 +70,87 @@ class _Register extends State<Register> {
             return Center(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      Center(
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              _email(),
-                              const SizedBox(
-                                height: 10,
+
+                      Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                          child: Card(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
-                              // _IDinput(),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
-                              _password(),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              _rePassword(),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              // _fullName(),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
-                              // _phoneNumber(),
-                              // const SizedBox(
-                              //   height: 100,
-                              // ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    UserRepository userRepository = UserRepository();
-                                    UserModel userModel = UserModel(
-                                      name: _fullNameController.text,
-                                      email: _emailController.text,
-                                      telNumber: _phoneNumberController.text,
-                                      userID: _userID.text,
-                                    );
-                                    userRepository.addUser(userModel, _emailController.text);
-                                    _createAccountWithEmailAndPassword(context);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.green,
-                                      fixedSize: const Size(300, 60),
-                                      shape:
-                                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                                  child: const Text('Sign Up'),
+                              elevation: 10,
+                              shadowColor: Colors.black,
+                              child: Form(
+                                key: _formKey,
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      20, 0, 20, 20),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      _email(),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      // _IDinput(),
+                                      // const SizedBox(
+                                      //   height: 10,
+                                      // ),
+                                      _password(),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      _rePassword(),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      _fullName(),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      _phoneNumber(),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width * 0.7,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+
+                                            if(_formKey.currentState!.validate())
+                                              {
+                                                _formKey.currentState!.save();
+                                                UserRepository userRepository = UserRepository();
+                                                UserModel userModel = UserModel(
+                                                  name: _fullNameController.text,
+                                                  email: _emailController.text,
+                                                  telNumber: _phoneNumberController.text,
+                                                );
+                                                userRepository.addUser(userModel, _emailController.text);
+                                                _createAccountWithEmailAndPassword(context);
+                                              }
+
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green,
+                                              fixedSize: const Size(300, 60),
+                                              shape:
+                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                                          child: const Text('Sign Up'),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
-                            ],
-                          ),
-                        ),
-                      ),
+                          ))
 
                     ],
                   ),
@@ -160,39 +161,21 @@ class _Register extends State<Register> {
           return Container();
         },
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 40),
-      //   key: _formKey,
-      //   child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      //     _fullName(),
-      //     SizedBox(height: 10),
-      //     _email(),
-      //     SizedBox(height: 10),
-      //     _phoneNumber(),
-      //     SizedBox(height: 10),
-      //     _matrixNumber(),
-      //     SizedBox(height: 10),
-      //     _password(),
-      //     SizedBox(height: 10),
-      //     _rePassword(),
-      //     SizedBox(height: 40),
-      //     _registerButton(context),
-      //   ]),
-      // ),
     );
   }
 
   Widget _fullName() {
     return TextFormField(
-      controller: _fullNameController,
+       controller: _fullNameController,
       validator: (value){
         if(value == null || value.isEmpty){
           return "Enter your Full Name";
         }
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Full Name',
       ),
+      onSaved: (val) => _fullNameController.text = val!,
     );
   }
 
@@ -205,11 +188,12 @@ class _Register extends State<Register> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Enter your Student ID';
+          return 'Enter your email';
         }
 
         return null;
       },
+      onSaved: (val) => _emailController.text = val!,
     );
   }
 
@@ -217,19 +201,21 @@ class _Register extends State<Register> {
     return TextFormField(
       controller: _phoneNumberController,
       validator: (value){
-        String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-        RegExp regExp = RegExp(patttern);
+        String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+        RegExp regExp = RegExp(pattern);
         if(value == null || value.isEmpty){
           return "Enter your phone number";
         }
         else if (!regExp.hasMatch(value)) {
           return 'Please enter valid phone number';
         }
+        return null;
       },
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Phone number',
       ),
+      onSaved: (val) => _phoneNumberController.text = val!,
     );
   }
 
@@ -237,7 +223,7 @@ class _Register extends State<Register> {
     return TextFormField(
       controller: _userID,
       keyboardType: TextInputType.number,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'User ID',
       ),
     );
@@ -247,7 +233,7 @@ class _Register extends State<Register> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Password',
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -269,7 +255,7 @@ class _Register extends State<Register> {
         return _passwordController.text == value ? null : "The password is not the same";
       },
       obscureText: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Re-Password',
       ),
     );
@@ -279,14 +265,14 @@ class _Register extends State<Register> {
     return ElevatedButton(
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Register()));
+            context, MaterialPageRoute(builder: (context) => const Register()));
       },
       style: ElevatedButton.styleFrom(
-          primary: Colors.green,
+          foregroundColor: Colors.green,
           fixedSize: const Size(300, 60),
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-      child: Text('Register'),
+      child: const Text('Register'),
     );
   }
 

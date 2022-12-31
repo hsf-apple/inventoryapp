@@ -15,7 +15,7 @@ class UserLoading extends UserState{
 }
 
 class UserLoaded extends UserState{
-  final DocumentSnapshot<Object?> userdata;
+  final UserModel userdata;
   const UserLoaded(this.userdata);
 
   @override

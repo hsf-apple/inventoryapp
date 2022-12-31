@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:inventoryapp/PresentationLayer/Screens/Admin/AcknowledgementDelivery/AcknowledgmentDelivery.dart';
+import 'package:inventoryapp/PresentationLayer/Screens/Admin/AdminEquipmentForm.dart';
 import 'package:inventoryapp/PresentationLayer/Screens/Staff/StaffHomeScreen.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-import '../About/AboutScreen.dart';
-import '../DeliveryForm.dart';
+import '../About/AboutScreenAdmin.dart';
+import '../AdminHomeScreen.dart';
+import '../EquipementAdmin/EquipementList.dart';
 
 
 
 
 
-class NavBarStaff extends StatefulWidget {
-  const NavBarStaff({Key? key}) : super(key: key);
+
+
+class NavBarAdmin extends StatefulWidget {
+  const NavBarAdmin({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _NavBarStaffState createState() => _NavBarStaffState();
+  _NavBarAdminState createState() => _NavBarAdminState();
 }
 
-class _NavBarStaffState extends State<NavBarStaff> {
+class _NavBarAdminState extends State<NavBarAdmin> {
   final PersistentTabController _controller =
   PersistentTabController(initialIndex: 0);
 
@@ -26,10 +31,14 @@ class _NavBarStaffState extends State<NavBarStaff> {
   List<Widget> _navScreens() {
     return [
 
-      const StaffHomeScreen(),
+      const EquipmentList(),
 
       ///test template
-      const AboutScreen()
+      const AcknowledgmentDelivery(),
+
+      const AboutScreenAdmin(),
+
+
       // const ConfirmCartScreen()
     ];
   }
@@ -38,14 +47,21 @@ class _NavBarStaffState extends State<NavBarStaff> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(LineIcons.home),
-        title: ("Home"),
+        title: ("admin homepage"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.black,
         activeColorSecondary: Colors.black,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(LineIcons.cogs),
-        title: ("Test"),
+        icon: const Icon(LineIcons.alternativeTrashRestore),
+        title: ("equipment form"),
+        activeColorPrimary: Colors.white,
+        inactiveColorPrimary: Colors.black,
+        activeColorSecondary: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(LineIcons.alternativeTrashRestore),
+        title: ("acknowledge delivery"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.black,
         activeColorSecondary: Colors.black,
