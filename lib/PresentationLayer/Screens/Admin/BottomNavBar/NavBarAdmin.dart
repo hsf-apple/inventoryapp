@@ -7,6 +7,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../About/AboutScreenAdmin.dart';
 import '../AdminHomeScreen.dart';
+import '../DataMainPage/AdminMainPage.dart';
 import '../EquipementAdmin/EquipementList.dart';
 
 
@@ -31,7 +32,8 @@ class _NavBarAdminState extends State<NavBarAdmin> {
   List<Widget> _navScreens() {
     return [
 
-      const EquipmentList(),
+      // const EquipmentList(),
+      const AdminMainPage(),
 
       ///test template
       const AcknowledgmentDelivery(),

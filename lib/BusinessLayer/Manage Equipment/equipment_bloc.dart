@@ -17,6 +17,16 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
     final EquipmentRepository equipmentRepository = EquipmentRepository();
     final EquipmentProvider equipmentProvider = EquipmentProvider();
 
+    /// get count both collections (main page :admin) GetCountBothCollection
+    on<GetCountBothCollection>((event, emit) async {
+      emit(EquipmentLoading());
+      final countDelivery = await EquipmentRepository().countDelivery();
+      final countEquipment = await EquipmentRepository().countEquipmentAdmin();
+
+      emit(CountBothCollectionLoad(countDelivery, countEquipment));
+    });
+
+
     on<CreateEquipmentAdmin>((event, emit) async {
       await equipmentRepository.addEquipment(event.equipmentAdminModel);
     });

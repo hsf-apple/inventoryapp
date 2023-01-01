@@ -79,3 +79,15 @@ class ListEquipmentLoadAdmin extends EquipmentState{
   @override
   List<Object?> get props => [equipmentModel];
 }
+
+/// count both collection
+
+/// get  equipment list for admin
+class CountBothCollectionLoad extends EquipmentState{
+  final List<int> countDelivery;
+  final List<int> countEquipment;
+
+  const CountBothCollectionLoad(this.countDelivery,this.countEquipment);
+  @override
+  List<Object?> get props => [countDelivery,countEquipment];
+}

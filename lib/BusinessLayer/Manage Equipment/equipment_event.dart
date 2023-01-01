@@ -97,3 +97,10 @@ class DeleteEquipmentAdmin extends EquipmentEvent{
   @override
   List<Object?> get props => [serialNo];
 }
+
+/// admin main page  ( call both document)
+class GetCountBothCollection extends EquipmentEvent{
+  const GetCountBothCollection();
+  @override
+  List<Object?> get props => [];
+}

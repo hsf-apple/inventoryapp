@@ -266,4 +266,79 @@ class EquipmentRepository {
     await FirebaseFirestore.instance.collection('equipmentAdmin').doc(serialNo).delete();
 
   }
+
+  ///counting all collection
+
+  /// collection delivery
+  Future<List<int>> countDelivery() async {
+    List<DeliveryModel> equipmentLabPending = [];
+    List<DeliveryModel> equipmentLabApprove = [];
+    List<DeliveryModel> equipmentLabDenied = [];
+
+    final value = await FirebaseFirestore.instance.collection(
+        "delivery").get();
+    for (var value in value.docs) {
+      var details = value.data();
+
+      if (details["acknowledgmentStatus"] == "Pending") {
+        equipmentLabPending.add(DeliveryModel.fromJson(value.data()));
+      }
+      if (details["acknowledgmentStatus"] == "Approved") {
+        equipmentLabApprove.add(DeliveryModel.fromJson(value.data()));
+      }
+      if (details["acknowledgmentStatus"] == "Denied") {
+        equipmentLabDenied.add(DeliveryModel.fromJson(value.data()));
+      }
+
+    }
+
+    // Count the length of the equipmentLab list
+    int countPending = equipmentLabPending.length;
+    int countApproved = equipmentLabApprove.length;
+    int countDenied = equipmentLabDenied.length;
+
+
+    // Return the count
+    return [countPending,countApproved,countDenied];
+  }
+
+  /// collection equipment admin
+  Future<List<int>> countEquipmentAdmin() async {
+    List<EquipmentAdminModel> nameDigitalMultimeter = [];
+    List<EquipmentAdminModel> nameDigitalPressure = [];
+    List<EquipmentAdminModel> nameElectrical = [];
+    List<EquipmentAdminModel> nameThermocouple = [];
+
+    final value = await FirebaseFirestore.instance.collection(
+        "equipmentAdmin").get();
+    for (var value in value.docs) {
+      var details = value.data();
+
+      if (details["equipmentName"] == "Digital Multimeter") {
+        nameDigitalMultimeter.add(EquipmentAdminModel.fromJson(value.data()));
+      }
+      if (details["equipmentName"] == "Digital Pressure Meter") {
+        nameDigitalPressure.add(EquipmentAdminModel.fromJson(value.data()));
+      }
+      if (details["equipmentName"] == "Electrical Safety Analyzer") {
+        nameElectrical.add(EquipmentAdminModel.fromJson(value.data()));
+      }
+      if (details["equipmentName"] == "Thermocouple Type K") {
+        nameThermocouple.add(EquipmentAdminModel.fromJson(value.data()));
+      }
+
+    }
+
+    // Count the length of the equipmentLab list
+    int countDigitalMultimeter = nameDigitalMultimeter.length;
+    int countDigitalPressure = nameDigitalPressure.length;
+    int countNameElectrical = nameElectrical.length;
+    int countNameThermocouple = nameThermocouple.length;
+
+
+    // Return the count
+    return [countDigitalMultimeter,countDigitalPressure,countNameElectrical,countNameThermocouple];
+  }
+
 }
+

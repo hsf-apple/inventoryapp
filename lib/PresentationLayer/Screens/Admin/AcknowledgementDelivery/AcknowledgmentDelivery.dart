@@ -33,6 +33,7 @@ class _AcknowledgmentDelivery extends State<AcknowledgmentDelivery>{
             title: const Text("List Request Delivery",
               style: TextStyle(color: Colors.black),),
             backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
             elevation: 0,
           ),
           body: BlocProvider(create:(_) => deliveryBloc, child: BlocBuilder<DeliveryBloc, DeliveryState>(

@@ -38,7 +38,7 @@ class _EquipmentListState extends State<EquipmentList> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Home Page',
+            'Equipment List',
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
