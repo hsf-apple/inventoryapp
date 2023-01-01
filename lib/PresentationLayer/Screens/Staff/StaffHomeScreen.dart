@@ -67,18 +67,18 @@ class _State extends State<StaffHomeScreen> {
           ),
           backgroundColor: Colors.white,
           elevation: 0,
-          actions: [
-            Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  tooltip: "Pull to refresh",
-                  icon: const Icon(Icons.info_outline_rounded),
-                  color: const Color.fromARGB(255, 4, 52, 84),
-                  onPressed: () {},
-                );
-              },
-            ),
-          ],
+          // actions: [
+          //   // Builder(
+          //   //   builder: (BuildContext context) {
+          //   //     return IconButton(
+          //   //       tooltip: "Pull to refresh",
+          //   //       icon: const Icon(Icons.info_outline_rounded),
+          //   //       color: const Color.fromARGB(255, 4, 52, 84),
+          //   //       onPressed: () {},
+          //   //     );
+          //   //   },
+          //   // ),
+          // ],
         ),
 
         body: Container(
@@ -140,7 +140,7 @@ class _State extends State<StaffHomeScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 33, 150, 243),
+          backgroundColor: const Color.fromARGB(255, 0, 199, 140),
           onPressed: () async {
            var scanBarcode =  await scanQR();
             equipmentBloc.add(GetSpecificEquipmentMainPageBool(scanBarcode));

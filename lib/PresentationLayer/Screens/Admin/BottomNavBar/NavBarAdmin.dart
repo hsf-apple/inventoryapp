@@ -60,7 +60,7 @@ class _NavBarAdminState extends State<NavBarAdmin> {
         activeColorSecondary: Colors.black,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(LineIcons.alternativeTrashRestore),
+        icon: const Icon(LineIcons.cogs),
         title: ("acknowledge delivery"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.black,

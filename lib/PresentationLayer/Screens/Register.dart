@@ -42,7 +42,7 @@ class _Register extends State<Register> {
 
         title: const Text('Register', style: TextStyle(color: Colors.black),),
         centerTitle: true,
-
+        elevation: 0,
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -75,82 +75,83 @@ class _Register extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 20),
-                          child: Card(
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              child: Form(
-                                key: _formKey,
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      20, 0, 20, 20),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      _email(),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      // _IDinput(),
-                                      // const SizedBox(
-                                      //   height: 10,
-                                      // ),
-                                      _password(),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      _rePassword(),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      _fullName(),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      _phoneNumber(),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width * 0.7,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-
-                                            if(_formKey.currentState!.validate())
-                                              {
-                                                _formKey.currentState!.save();
-                                                UserRepository userRepository = UserRepository();
-                                                UserModel userModel = UserModel(
-                                                  name: _fullNameController.text,
-                                                  email: _emailController.text,
-                                                  telNumber: _phoneNumberController.text,
-                                                );
-                                                userRepository.addUser(userModel, _emailController.text);
-                                                _createAccountWithEmailAndPassword(context);
-                                              }
-
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.green,
-                                              fixedSize: const Size(300, 60),
-                                              shape:
-                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                                          child: const Text('Sign Up'),
-                                        ),
-                                      )
-                                    ],
+                      Card(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          elevation: 10,
+                          shadowColor: Colors.black,
+                          child: Form(
+                            key: _formKey,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  20, 0, 20, 20),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 15,
                                   ),
-                                ),
-                              )
-                          ))
+                                  _email(),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  // _IDinput(),
+                                  // const SizedBox(
+                                  //   height: 10,
+                                  // ),
+                                  _password(),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  _rePassword(),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  _fullName(),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  _phoneNumber(),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.7,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+
+                                        if(_formKey.currentState!.validate())
+                                        {
+                                          _formKey.currentState!.save();
+                                          UserRepository userRepository = UserRepository();
+                                          UserModel userModel = UserModel(
+                                            name: _fullNameController.text,
+                                            email: _emailController.text,
+                                            telNumber: _phoneNumberController.text,
+                                          );
+                                          userRepository.addUser(userModel, _emailController.text);
+                                          _createAccountWithEmailAndPassword(context);
+                                        }
+
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(255, 0, 199, 140),
+                                          fixedSize: const Size(300, 60),
+                                          shape:
+                                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                                      child: const Text('Sign Up'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                      )
+                      // Padding(
+                      //     padding:
+                      //     const EdgeInsets.symmetric(horizontal: 20),
+                      //     child: )
 
                     ],
                   ),
@@ -268,7 +269,7 @@ class _Register extends State<Register> {
             context, MaterialPageRoute(builder: (context) => const Register()));
       },
       style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.green,
+          foregroundColor: const Color.fromARGB(255, 0, 199, 140),
           fixedSize: const Size(300, 60),
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),

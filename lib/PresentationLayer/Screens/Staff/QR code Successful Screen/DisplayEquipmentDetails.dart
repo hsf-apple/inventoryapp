@@ -34,7 +34,7 @@ class _DisplayEquipmentDetailsState extends State<DisplayEquipmentDetails> {
                   (Route<dynamic> route) => false);
           return true;
         }, child: Scaffold(
-          appBar: AppBar(backgroundColor: const Color.fromARGB(255, 4, 52, 84),
+          appBar: AppBar(backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.of(context,rootNavigator: false ).pushAndRemoveUntil(
@@ -75,7 +75,8 @@ class _DisplayEquipmentDetailsState extends State<DisplayEquipmentDetails> {
                                       padding:
                                       const EdgeInsets.symmetric(horizontal: 20),
                                       child: Card(
-                                        color: const Color.fromARGB(253, 217, 217, 217),
+                                        color: const Color.fromARGB(
+                                            253, 250, 250, 250),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(15.0),
                                         ),
@@ -422,7 +423,7 @@ Widget successfulMessage(context)
       child: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height / 2,
-        color: const Color.fromARGB(255, 4, 52, 84),
+        color: const Color.fromARGB(255, 0, 0, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
@@ -468,6 +469,7 @@ Widget checkCalibrationExpiredButton(context,String  dueDateCalibration )
       child: ElevatedButton(
         style:
         ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 0, 199, 140),
           textStyle: const TextStyle(
               fontSize: 20),
           shape:
