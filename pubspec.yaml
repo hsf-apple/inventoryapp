@@ -88,6 +88,9 @@ dependencies:
 
   awesome_notifications: ^0.7.4+1
 
+  #firestore cache (custom: not from google)
+  firestore_cache: ^2.3.0
+
   #convert to pdf
   pdf: ^3.8.4
   #open pdf document
@@ -120,6 +123,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+   # - json/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -190,4 +194,5 @@ flutter:
     - lib/PresentationLayer/Screens/Admin/About/Profile/
     - lib/PresentationLayer/Screens/Admin/About/Password/
     - lib/main.dart
+    - assets/
 

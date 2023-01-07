@@ -2,51 +2,64 @@ import 'package:flutter/material.dart';
 
 class CurveWidget extends StatelessWidget {
 
-  final Widget child;
-  final double curveDistance;
-  final double curveHeight;
 
-  const CurveWidget({Key? key, required this.child,  this.curveDistance = 70,  this.curveHeight = 70}) : super(key: key);
+  const CurveWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color colorMainTheme = Theme.of(context).primaryColor;
     //clip path => create custom shape
-    return ClipPath(clipper: CurvedWidgetBackground(curveHeight: curveHeight, curveDistance: curveDistance),child: child,);
+    return ClipPath(clipper: CustomClipPath(),child: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color.fromARGB(255, 64, 224, 208),
+            Colors.blue,
+          ],
+        ),
+      ),
+      height: 120,
+    ),);
   }
 }
 //To create a custom clipper,
 // you need to create a class that extends CustomClipper<Path>
 // and must override two methods.
-
-class CurvedWidgetBackground extends CustomClipper<Path>
+class CustomClipPath extends CustomClipper<Path>
 {
-  final double curveDistance;
-  final double curveHeight;
-
-  CurvedWidgetBackground({required this.curveDistance, required this.curveHeight});
-
   @override
-  getClip(Size size) {
-    Path clippedPath = Path();
-    //x = width,y = height
-    clippedPath.lineTo(size.width, 0);
+  Path getClip(Size size)
+  {
+    double w = size.width;
+    double h = size.height;
 
-    clippedPath.lineTo(size.width, size.height - curveDistance - curveHeight);
+    var path = Path();
+    path.lineTo(0, size.height); //start path with this if you are making at bottom
 
-    clippedPath.quadraticBezierTo(size.width, size.height - curveHeight,
-        size.width - curveDistance, size.height - curveHeight);
+    var firstStart = Offset(size.width / 5, size.height);
+    //fist point of quadratic bezier curve
+    var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
+    //second point of quadratic bezier curve
+    path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
 
-    clippedPath.lineTo(curveDistance, size.height - curveHeight);
+    var secondStart = Offset(size.width - (size.width / 3.24), size.height - 105);
+    //third point of quadratic bezier curve
+    var secondEnd = Offset(size.width, size.height - 10);
+    //fourth point of quadratic bezier curve
+    path.quadraticBezierTo(secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
 
-    clippedPath.quadraticBezierTo(
-        0, size.height - curveHeight, 0 ,size.height - curveDistance - curveHeight);
+    path.lineTo(size.width, 0); //end with this path if you are making wave at bottom
+    path.close();
+    return path;
 
-    clippedPath.lineTo(0, 0);
-    return clippedPath;
+
   }
 
   @override
-  bool shouldReclip(CustomClipper oldClipper) {
+  bool shouldReclip(CustomClipper<Path> oldClipper)
+  {
     return false;
   }
 

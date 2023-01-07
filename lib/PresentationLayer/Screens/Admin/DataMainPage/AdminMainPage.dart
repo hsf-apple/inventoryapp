@@ -27,6 +27,13 @@ class _AdminMainPageState extends State<AdminMainPage> {
     super.initState();
   }
 
+  ///refresh
+  Future<void> refresh() {
+    return refreshBloc().then((value) => setState(() {}));
+  }
+  Future<void> refreshBloc() async {
+    equipmentBloc.add(const GetCountBothCollection());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +42,20 @@ class _AdminMainPageState extends State<AdminMainPage> {
         title:const Text('Main Page', style: TextStyle(color: Colors.black),),
         backgroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                tooltip: "Pull to refresh",
+                icon: const Icon(Icons.info_outline_rounded),
+                color: const Color.fromARGB(255, 4, 52, 84),
+                onPressed: () {
+
+                },
+              );
+            },
+          ),
+        ],
       ),
       body:MultiBlocProvider(
         providers: [
@@ -61,7 +82,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CountBothCollectionLoad) {
 
-                  return Padding(padding: const EdgeInsets.all( 20),
+                  return RefreshIndicator(onRefresh: refresh, child: Padding(padding: const EdgeInsets.all( 20),
                     child: ListView(
                       children: [
                         cardDelivery(state.countDelivery),
@@ -71,7 +92,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
 
 
                       ],
-                    ),);
+                    ),));
 
                 }  else {
                   return const Center(child: CircularProgressIndicator());
@@ -124,46 +145,96 @@ class _AdminMainPageState extends State<AdminMainPage> {
               physics:  const NeverScrollableScrollPhysics(),
               crossAxisCount: 3,
               children:  [
-                Card(
-                    color:  const Color.fromARGB(255, 64, 224, 208),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
+                      ),
                     ),
-                    elevation: 10,
-                    shadowColor: Colors.black
-                    ,child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [const Text("Pending",
-                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                    , Text(countDelivery[0].toString())],
-                )),
-                Card(
-                    color:  const Color.fromARGB(255, 64, 224, 208),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 10,
-                    shadowColor: Colors.black,
-                    child: Column(
+                    child: Card(
+                        color:  Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 0,
+                        shadowColor: Colors.black
+                        ,child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [const Text("Denied",
+                      children: [const Text("Pending",
                           style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                        , Text(countDelivery[2].toString())],
+                        , Text(countDelivery[0].toString())],
                     )),
-                Card(    color:  const Color.fromARGB(255, 64, 224, 208),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
+                      ),
                     ),
-                    elevation: 10,
-                    shadowColor: Colors.black,child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [const Text("Denied",
-                          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                        , Text(countDelivery[1].toString())],
-                    )),
+                    child: Card(
+                        color:  Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 0,
+                        shadowColor: Colors.black,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [const Text("Denied",
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                            , Text(countDelivery[2].toString())],
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
+                      ),
+                    ),
+                    child: Card(
+                        color:   Colors.transparent,
+                        elevation:0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+
+                        shadowColor: Colors.black,child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [const Text("Approved",
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                            , Text(countDelivery[1].toString())],
+                        )),
+                  ),
+                ),
               ],
             ),
           )
@@ -210,14 +281,26 @@ class _AdminMainPageState extends State<AdminMainPage> {
               childAspectRatio: (2 / 1),
               crossAxisCount: 2,
               children:  [
-                SizedBox(
+                Padding(padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color.fromARGB(255, 64, 224, 208),
+                        Colors.blue,
+                      ],
+                    ),
+                  ),
                   height: 20,
                   child: Card(
-                      color: const Color.fromARGB(0xFF, 0x0A, 0xBA, 0xB5),
+                      color: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      elevation: 10,
+                      elevation: 0,
                       shadowColor: Colors.black,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -228,62 +311,104 @@ class _AdminMainPageState extends State<AdminMainPage> {
                           , const SizedBox(height: 10,),
                           Text(countEquipment[0].toString())],
                       )),
-                ),
-                SizedBox(
-                  height: 20,
-                  child: Card(  color: const Color.fromARGB(0xFF, 0x0A, 0xBA, 0xB5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                ),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
                       ),
-                      elevation: 10,
-                      shadowColor: Colors.black,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [const Text("Digital Pressure Meter",
-                            textAlign: TextAlign.center, // Align the text to the center
-                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                          ,const SizedBox(height: 10,),
-                          Text(countEquipment[1].toString())],
-                      )),
+                    ),
+                    height: 20,
+                    child: Card(  color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 0,
+                        shadowColor: Colors.black,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [const Text("Digital Pressure Meter",
+                              textAlign: TextAlign.center, // Align the text to the center
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                            ,const SizedBox(height: 10,),
+                            Text(countEquipment[1].toString())],
+                        )),
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                  child: Card(  color: const Color.fromARGB(0xFF, 0x0A, 0xBA, 0xB5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
                       ),
-                      elevation: 10,
-                      shadowColor: Colors.black,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [const Text("Electrical Safety Analyzer",
-                            textAlign: TextAlign.center, // Align the text to the center
-                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                          ,const SizedBox(height: 10,),
-                          Text(countEquipment[2].toString())],
-                      )),
+                    ),
+                    height: 20,
+                    child: Card(  color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 0,
+                        shadowColor: Colors.black,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [const Text("Electrical Safety Analyzer",
+                              textAlign: TextAlign.center, // Align the text to the center
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                            ,const SizedBox(height: 10,),
+                            Text(countEquipment[2].toString())],
+                        )),
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                  child: Card(
-                      color: const Color.fromARGB(0xFF, 0x0A, 0xBA, 0xB5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
                       ),
-                      elevation: 10,
-                      shadowColor: Colors.black,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [const Text("Thermocouple Type K",
-                            textAlign: TextAlign.center, // Align the text to the center
-                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                          ,
-                          const SizedBox(height: 10,),
-                          Text(countEquipment[3].toString())],
-                      )),
+                    ),
+                    height: 20,
+                    child: Card(
+                        color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 0,
+                        shadowColor: Colors.black,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [const Text("Thermocouple Type K",
+                              textAlign: TextAlign.center, // Align the text to the center
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                            ,
+                            const SizedBox(height: 10,),
+                            Text(countEquipment[3].toString())],
+                        )),
+                  ),
                 ),
               ],
             ),

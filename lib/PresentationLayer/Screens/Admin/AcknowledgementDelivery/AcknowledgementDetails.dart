@@ -342,14 +342,15 @@ class _AcknowledgementDetailsState extends State<AcknowledgementDetails> {
 
 
                                         sendQueryReminderNotification(deliveryModel);
+                                        //
+                                        // Navigator.of(context,rootNavigator: false ).pushAndRemoveUntil(
+                                        //     MaterialPageRoute(
+                                        //       builder: (BuildContext context) =>
+                                        //       const AcknowledgmentDelivery(),
+                                        //     ),
+                                        //         (Route<dynamic> route) => false);
 
-                                        Navigator.of(context,rootNavigator: false ).pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                              const AcknowledgmentDelivery(),
-                                            ),
-                                                (Route<dynamic> route) => false);
-
+                                        Navigator.pop(context);
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(

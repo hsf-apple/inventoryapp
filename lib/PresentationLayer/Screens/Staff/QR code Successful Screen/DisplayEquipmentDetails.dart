@@ -34,7 +34,8 @@ class _DisplayEquipmentDetailsState extends State<DisplayEquipmentDetails> {
                   (Route<dynamic> route) => false);
           return true;
         }, child: Scaffold(
-          appBar: AppBar(backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.of(context,rootNavigator: false ).pushAndRemoveUntil(
@@ -44,8 +45,21 @@ class _DisplayEquipmentDetailsState extends State<DisplayEquipmentDetails> {
                   ),
                       (Route<dynamic> route) => false),
             ),
-            elevation: 0,
+             elevation: 0,
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color.fromARGB(255, 64, 224, 208),
+                      Colors.blue,
+                    ],
+                  ),
+                ),
+              )
           ),
+
           body: BlocProvider(
             create: (context) {
               equipmentBloc.add(GetSpecificEquipment(title));
@@ -423,7 +437,16 @@ Widget successfulMessage(context)
       child: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height / 2,
-        color: const Color.fromARGB(255, 0, 0, 0),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
+            colors: [
+              Color.fromARGB(255, 64, 224, 208),
+              Colors.blue,
+            ],
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
@@ -459,35 +482,39 @@ Widget checkCalibrationExpiredButton(context,String  dueDateCalibration )
   if (dateTime.isBefore(DateTime.now())) {
     ///The date is not the current date
     return SizedBox(
-      width: MediaQuery.of(context)
-          .size
-          .height /
-          2,
-      // <-- Your width
+      width: MediaQuery.of(context).size.width * 0.7,
       height: 50,
-      // <-- Your height
-      child: ElevatedButton(
-        style:
-        ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 0, 199, 140),
-          textStyle: const TextStyle(
-              fontSize: 20),
-          shape:
-          RoundedRectangleBorder(
-            borderRadius:
-            BorderRadius.circular(
-                15),
-          ),
+      child: Material(
+        elevation: 8,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 64, 224, 208),
+                  Colors.blue,
+                ],
+              ),
+            ),
+            child:ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const StaffEquipmentForm()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: Colors.transparent,
+                  fixedSize: const Size(300, 60),
+                  shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+              child: const Text('Calibration Expired'),
+            )
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const StaffEquipmentForm()),
-          );
-
-        },
-        child: const Text(
-            "Calibration Expired"),
       ),
     );
   } else {

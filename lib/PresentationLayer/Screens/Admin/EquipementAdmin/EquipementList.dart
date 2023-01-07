@@ -8,6 +8,7 @@ import '../../../../DataLayer/Model/EquipmentAdminModel.dart';
 import '../../Login.dart';
 import 'EquipementAdd.dart';
 import 'EquipementUpdate.dart';
+import 'EquipmentDetails.dart';
 
 
 class EquipmentList extends StatefulWidget {
@@ -138,9 +139,19 @@ class _EquipmentListState extends State<EquipmentList> {
                     }
                   },
                   textColor: const Color.fromARGB(255, 24, 191, 161),
-                  title: const Text(
-                    'Digital Multimeter',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  title:  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset('assets/DigitalMultimeter.png'),
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Digital Multimeter',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                   subtitle: const Text(''),
                   children: <Widget>[
@@ -155,9 +166,19 @@ class _EquipmentListState extends State<EquipmentList> {
                 child:Card(
                   child: ExpansionTile(
                     textColor: const Color.fromARGB(255, 24, 191, 161),
-                    title: const Text(
-                      'Electrical Safety Analyzer',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    title:  Row(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset('assets/ElectricalSafetyAnalyzer.png'),
+                        ),
+                        const SizedBox(width: 10),
+                        const Text(
+                          'Electrical Safety Analyzer',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                     subtitle: const Text(''),
                     children: <Widget>[
@@ -172,9 +193,19 @@ class _EquipmentListState extends State<EquipmentList> {
               child: Card(
                 child: ExpansionTile(
                   textColor: const Color.fromARGB(255, 24, 191, 161),
-                  title: const Text(
-                    'Digital Pressure Meter',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  title:Row(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset('assets/DigitalPressureMeter.png'),
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Digital Pressure Meter',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                   subtitle: const Text(''),
                   children: <Widget>[
@@ -189,9 +220,19 @@ class _EquipmentListState extends State<EquipmentList> {
               child: Card(
                 child: ExpansionTile(
                   textColor: const Color.fromARGB(255, 24, 191, 161),
-                  title: const Text(
-                    'Thermocouple Type K',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  title:Row(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset('assets/K.png'),
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Thermocouple Type K',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                   subtitle: const Text(''),
                   children: <Widget>[
@@ -217,8 +258,66 @@ class _EquipmentListState extends State<EquipmentList> {
           itemCount: dataCategory.length ?? 0,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () {
+              onTap: () async {
 
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const EquipmentDetails(),
+                        settings: RouteSettings(
+                          arguments: {
+                            "month": dataCategory[index]
+                                .month
+                                .toString(),
+                            "dateReceive": dataCategory[index]
+                                .dateReceive
+                                .toString(),
+                            "equipmentName": dataCategory[index]
+                                .equipmentName
+                                .toString(),
+                            "tagNo": dataCategory[index]
+                                .tagNo
+                                .toString(),
+                            "serialNo": dataCategory[index]
+                                .serialNo
+                                .toString(),
+                            "manufacturer": dataCategory[index]
+                                .manufacturer
+                                .toString(),
+                            "model": dataCategory[index]
+                                .model
+                                .toString(),
+                            "laboratoryWorks": dataCategory[index]
+                                .laboratoryWorks
+                                .toString(),
+                            "confirmationDate": dataCategory[index]
+                                .confirmationDate
+                                .toString(),
+                            "physicalCondition": dataCategory[index]
+                                .physicalCondition
+                                .toString(),
+                            "jobNo": dataCategory[index]
+                                .jobNo
+                                .toString(),
+                            "status": dataCategory[index]
+                                .status
+                                .toString(),
+                            "dueDate": dataCategory[index]
+                                .dueDate
+                                .toString(),
+                            "certificateReportNo": dataCategory[index]
+                                .certificateReportNo
+                                .toString(),
+                            "dateReturned": dataCategory[index]
+                                .dateReturned
+                                .toString(),
+                            "location": dataCategory[index]
+                                .location
+                                .toString(),
+
+                          },
+                        )));
               },
               child: Card(
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

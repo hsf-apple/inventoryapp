@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inventoryapp/PresentationLayer/Screens/Admin/AcknowledgementDelivery/AcknowledgmentDelivery.dart';
-import 'package:inventoryapp/PresentationLayer/Screens/Admin/AdminEquipmentForm.dart';
-import 'package:inventoryapp/PresentationLayer/Screens/Staff/StaffHomeScreen.dart';
+
 import 'package:line_icons/line_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../About/AboutScreenAdmin.dart';
-import '../AdminHomeScreen.dart';
 import '../DataMainPage/AdminMainPage.dart';
-import '../EquipementAdmin/EquipementList.dart';
-
-
-
-
-
 
 
 class NavBarAdmin extends StatefulWidget {
@@ -35,8 +26,8 @@ class _NavBarAdminState extends State<NavBarAdmin> {
       // const EquipmentList(),
       const AdminMainPage(),
 
-      ///test template
-      const AcknowledgmentDelivery(),
+      // ///test template
+      // const AcknowledgmentDelivery(),
 
       const AboutScreenAdmin(),
 
@@ -54,13 +45,13 @@ class _NavBarAdminState extends State<NavBarAdmin> {
         inactiveColorPrimary: Colors.black,
         activeColorSecondary: Colors.black,
       ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(LineIcons.alternativeTrashRestore),
-        title: ("equipment form"),
-        activeColorPrimary: Colors.white,
-        inactiveColorPrimary: Colors.black,
-        activeColorSecondary: Colors.black,
-      ),
+      // PersistentBottomNavBarItem(
+      //   icon: const Icon(LineIcons.alternativeTrashRestore),
+      //   title: ("equipment form"),
+      //   activeColorPrimary: Colors.white,
+      //   inactiveColorPrimary: Colors.black,
+      //   activeColorSecondary: Colors.black,
+      // ),
       PersistentBottomNavBarItem(
         icon: const Icon(LineIcons.cogs),
         title: ("acknowledge delivery"),

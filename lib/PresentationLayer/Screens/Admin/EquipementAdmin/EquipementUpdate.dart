@@ -128,96 +128,91 @@ class _EquipmentUpdateState extends State<EquipmentUpdate> {
                                         const SizedBox(height: 15),
                                         locationField(location),
                                         const SizedBox(height: 15),
-                                        Material(
-                                          elevation: 8,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(25)),
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(25)),
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomLeft,
-                                                colors: [
-                                                  Colors.greenAccent,
-                                                  Colors.lightBlue
-                                                ],
-                                              ),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topRight,
+                                              end: Alignment.bottomLeft,
+                                              colors: [
+                                                Color.fromARGB(255, 64, 224, 208),
+                                                Colors.blue,
+                                              ],
                                             ),
-                                            child: ElevatedButton(
-                                              onPressed: () async {
-                                                if (_formKey.currentState!.validate()) {
+                                          ),
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              if (_formKey.currentState!.validate()) {
 
-                                                  _formKey.currentState!.save();
+                                                _formKey.currentState!.save();
 
-                                                  // Parse the string into a DateTime object
-                                                  final date = DateFormat('yyyy-MM-dd').parse(confirmationDateFinal);
+                                                // Parse the string into a DateTime object
+                                                final date = DateFormat('yyyy-MM-dd').parse(confirmationDateFinal);
 
-                                                  // Add one year to the date
-                                                  final newDate = date.add(const Duration(days: 365));
+                                                // Add one year to the date
+                                                final newDate = date.add(const Duration(days: 365));
 
-                                                  final dateFormatter = DateFormat('yyyy-MM-dd');
-                                                  if (kDebugMode) {
-                                                    print(dateFormatter.format(newDate));
-                                                  } // Output: 2023-01-03
+                                                final dateFormatter = DateFormat('yyyy-MM-dd');
+                                                if (kDebugMode) {
+                                                  print(dateFormatter.format(newDate));
+                                                } // Output: 2023-01-03
 
 
-                                                  EquipmentAdminModel
-                                                  equipmentAdminModel =
-                                                  EquipmentAdminModel(
-                                                    month: monthFinal,
-                                                    dateReceive: dateReceiveFinal,
-                                                    equipmentName: equipmentNameFinal,
-                                                    tagNo: tagNoFinal,
-                                                    serialNo: serialNoFinal,
-                                                    manufacturer: manufacturerFinal,
-                                                    model: modelFinal,
-                                                    laboratoryWorks:
-                                                    laboratoryWorksFinal,
-                                                    confirmationDate:
-                                                   confirmationDateFinal,
-                                                    physicalCondition:
-                                                    physicalConditionFinal,
-                                                    jobNo: jobNoFinal,
-                                                    status: statusFinal,
-                                                    dueDate: dateFormatter.format(newDate).toString(),
-                                                    certificateReportNo:
-                                                    certificateReportNoFinal,
-                                                    dateReturned: dateReturnedFinal,
-                                                    location: locationFinal,
-                                                  );
+                                                EquipmentAdminModel
+                                                equipmentAdminModel =
+                                                EquipmentAdminModel(
+                                                  month: monthFinal,
+                                                  dateReceive: dateReceiveFinal,
+                                                  equipmentName: equipmentNameFinal,
+                                                  tagNo: tagNoFinal,
+                                                  serialNo: serialNoFinal,
+                                                  manufacturer: manufacturerFinal,
+                                                  model: modelFinal,
+                                                  laboratoryWorks:
+                                                  laboratoryWorksFinal,
+                                                  confirmationDate:
+                                                  confirmationDateFinal,
+                                                  physicalCondition:
+                                                  physicalConditionFinal,
+                                                  jobNo: jobNoFinal,
+                                                  status: statusFinal,
+                                                  dueDate: dateFormatter.format(newDate).toString(),
+                                                  certificateReportNo:
+                                                  certificateReportNoFinal,
+                                                  dateReturned: dateReturnedFinal,
+                                                  location: locationFinal,
+                                                );
 
-                                                  equipmentBloc.add(
-                                                      UpdateEquipmentAdmin(
-                                                          equipmentAdminModel,serialNo ));
+                                                equipmentBloc.add(
+                                                    UpdateEquipmentAdmin(
+                                                        equipmentAdminModel,serialNo ));
 
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                    content:
-                                                    Text('Data Added Successfully'),
-                                                    backgroundColor: Colors.black,
-                                                  ));
-                                                  //Active when finish home page
-                                                  //Navigator.of(context).pop();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(const SnackBar(
+                                                  content:
+                                                  Text('Data Added Successfully'),
+                                                  backgroundColor: Colors.black,
+                                                ));
+                                                //Active when finish home page
+                                                //Navigator.of(context).pop();
 
-                                                  Navigator.of(context,rootNavigator: false ).pushAndRemoveUntil(
-                                                      MaterialPageRoute(
-                                                        builder: (BuildContext context) =>
-                                                        const EquipmentList(),
-                                                      ),
-                                                          (Route<dynamic> route) => false);
+                                                Navigator.of(context,rootNavigator: false ).pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                      builder: (BuildContext context) =>
+                                                      const EquipmentList(),
+                                                    ),
+                                                        (Route<dynamic> route) => false);
 
-                                                }
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.transparent,
-                                                  fixedSize: const Size(300, 60),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(25))),
-                                              child: const Text('Confirm'),
-                                            ),
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                elevation:0,
+                                                backgroundColor: Colors.transparent,
+                                                fixedSize: const Size(300, 60),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(25))),
+                                            child: const Text('Confirm'),
                                           ),
                                         ),
                                         const SizedBox(height: 15),

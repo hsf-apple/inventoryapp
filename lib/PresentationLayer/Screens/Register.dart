@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../BusinessLayer/AuthBloc/auth_bloc.dart';
 import '../../DataLayer/Model/UserModel/userModel.dart';
 import '../../DataLayer/Repository/UserRepository/UserRepository.dart';
@@ -35,12 +36,16 @@ class _Register extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    // int cHeight = MediaQuery.of(context).size.height * 1;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading:const BackButton(color: Colors.black),
-
-        title: const Text('Register', style: TextStyle(color: Colors.black),),
+        leading: const BackButton(color: Colors.black),
+        // title: const Text(
+        //   'Register',
+        //   style: TextStyle(color: Colors.black),
+        // ),
         centerTitle: true,
         elevation: 0,
       ),
@@ -67,97 +72,130 @@ class _Register extends State<Register> {
           }
           if (state is UnAuthenticated) {
             // Displaying the sign up form if the user is not authenticated
-            return Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-
-                      Card(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+            return Container(
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: Container(
+                            // padding: const EdgeInsets.only(bottom: 310),
+                            height: 60,
+                            width: 169,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('assets/Icon.png'),
+                                    fit: BoxFit.fill)),
                           ),
-                          elevation: 10,
-                          shadowColor: Colors.black,
-                          child: Form(
-                            key: _formKey,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20, 0, 20, 20),
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  _email(),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  // _IDinput(),
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  _password(),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  _rePassword(),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  _fullName(),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  _phoneNumber(),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.7,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-
-                                        if(_formKey.currentState!.validate())
-                                        {
-                                          _formKey.currentState!.save();
-                                          UserRepository userRepository = UserRepository();
-                                          UserModel userModel = UserModel(
-                                            name: _fullNameController.text,
-                                            email: _emailController.text,
-                                            telNumber: _phoneNumberController.text,
-                                          );
-                                          userRepository.addUser(userModel, _emailController.text);
-                                          _createAccountWithEmailAndPassword(context);
-                                        }
-
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color.fromARGB(255, 0, 199, 140),
-                                          fixedSize: const Size(300, 60),
-                                          shape:
-                                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                                      child: const Text('Sign Up'),
-                                    ),
-                                  )
-                                ],
-                              ),
+                        ),
+                        const SizedBox(height: 30),
+                        Card(
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                          )
-                      )
-                      // Padding(
-                      //     padding:
-                      //     const EdgeInsets.symmetric(horizontal: 20),
-                      //     child: )
-
-                    ],
+                            elevation: 10,
+                            shadowColor: Colors.black,
+                            child: Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children:const [
+                                         Text(
+                                          'Sign Up',
+                                          style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    _email(),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    _password(),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    _rePassword(),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    _fullName(),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    _phoneNumber(),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topRight,
+                                          end: Alignment.bottomLeft,
+                                          colors: [
+                                            Color.fromARGB(255, 64, 224, 208),
+                                            Colors.blue,
+                                          ],
+                                        ),
+                                      ),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            _formKey.currentState!.save();
+                                            UserRepository userRepository =
+                                                UserRepository();
+                                            UserModel userModel = UserModel(
+                                              name: _fullNameController.text,
+                                              email: _emailController.text,
+                                              telNumber:
+                                                  _phoneNumberController.text,
+                                            );
+                                            userRepository.addUser(userModel,
+                                                _emailController.text);
+                                            _createAccountWithEmailAndPassword(
+                                                context);
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            primary: Colors.transparent,
+                                            fixedSize: const Size(300, 60),
+                                            shape:
+                                            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                                        child: const Text('Sign Up'),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ))
+                        // Padding(
+                        //     padding:
+                        //     const EdgeInsets.symmetric(horizontal: 20),
+                        //     child: )
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            );
+                ));
           }
           return Container();
         },
@@ -167,9 +205,9 @@ class _Register extends State<Register> {
 
   Widget _fullName() {
     return TextFormField(
-       controller: _fullNameController,
-      validator: (value){
-        if(value == null || value.isEmpty){
+      controller: _fullNameController,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
           return "Enter your Full Name";
         }
       },
@@ -183,9 +221,7 @@ class _Register extends State<Register> {
   Widget _email() {
     return TextFormField(
       controller: _emailController,
-      decoration: const InputDecoration(
-          hintText: "Email"
-      ),
+      decoration: const InputDecoration(hintText: "Email"),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -201,13 +237,12 @@ class _Register extends State<Register> {
   Widget _phoneNumber() {
     return TextFormField(
       controller: _phoneNumberController,
-      validator: (value){
+      validator: (value) {
         String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
         RegExp regExp = RegExp(pattern);
-        if(value == null || value.isEmpty){
+        if (value == null || value.isEmpty) {
           return "Enter your phone number";
-        }
-        else if (!regExp.hasMatch(value)) {
+        } else if (!regExp.hasMatch(value)) {
           return 'Please enter valid phone number';
         }
         return null;
@@ -249,11 +284,13 @@ class _Register extends State<Register> {
   Widget _rePassword() {
     return TextFormField(
       controller: _rePasswordController,
-      validator: (value){
-        if(value == null || value.isEmpty){
+      validator: (value) {
+        if (value == null || value.isEmpty) {
           return "Enter your password";
         }
-        return _passwordController.text == value ? null : "The password is not the same";
+        return _passwordController.text == value
+            ? null
+            : "The password is not the same";
       },
       obscureText: true,
       decoration: const InputDecoration(
@@ -272,7 +309,7 @@ class _Register extends State<Register> {
           foregroundColor: const Color.fromARGB(255, 0, 199, 140),
           fixedSize: const Size(300, 60),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
       child: const Text('Register'),
     );
   }

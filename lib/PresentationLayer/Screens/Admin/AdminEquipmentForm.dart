@@ -36,6 +36,7 @@ class _AdminEquipmentForm extends State<AdminEquipmentForm>{
 
   @override
   Widget build(BuildContext context) {
+    double cWidth = MediaQuery.of(context).size.width * 0.8;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
