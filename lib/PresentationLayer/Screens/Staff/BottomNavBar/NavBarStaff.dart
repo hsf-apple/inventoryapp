@@ -5,6 +5,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../About/AboutScreen.dart';
 import '../DeliveryForm.dart';
+import '../Equipment/EquipmentListUser.dart';
 
 
 
@@ -28,6 +29,7 @@ class _NavBarStaffState extends State<NavBarStaff> {
 
       const StaffHomeScreen(),
 
+      const EquipmentListUser(),
       ///test template
       const AboutScreen()
       // const ConfirmCartScreen()
@@ -44,8 +46,15 @@ class _NavBarStaffState extends State<NavBarStaff> {
         activeColorSecondary: Colors.black,
       ),
       PersistentBottomNavBarItem(
+        icon: const Icon(LineIcons.list),
+        title: ("Equipment List"),
+        activeColorPrimary: Colors.white,
+        inactiveColorPrimary: Colors.black,
+        activeColorSecondary: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
         icon: const Icon(LineIcons.cogs),
-        title: ("Test"),
+        title: ("About"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.black,
         activeColorSecondary: Colors.black,

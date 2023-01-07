@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = inventoryapp
+PRODUCT_NAME = AdvanceCalLab;
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.KSoftworks.inventoryapp
+PRODUCT_BUNDLE_IDENTIFIER = com.KSoftworks.inventoryapp;
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2022 com.KSoftworks. All rights reserved.

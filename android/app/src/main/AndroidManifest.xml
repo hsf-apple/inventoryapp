@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.KSoftworks.inventoryapp">
    <application
-        android:label="inventoryapp"
+        android:label="AdvanceCalLab"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

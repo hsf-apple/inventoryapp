@@ -56,6 +56,7 @@ class _ChangePassword extends State<ChangePassword>{
             title: const Text('Change Password'),
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
+            elevation: 0,
           ),
 
           body: Center(
@@ -169,79 +170,74 @@ class _ChangePassword extends State<ChangePassword>{
                                   const SizedBox(
                                     height: 30,
                                   ),
-                                  Material(
-                                    elevation: 8,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(25)),
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(25)),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topRight,
-                                          end: Alignment.bottomLeft,
-                                          colors: [
-                                            Colors.greenAccent,
-                                            Colors.lightBlue
-                                          ],
-                                        ),
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topRight,
+                                        end: Alignment.bottomLeft,
+                                        colors: [
+                                          Color.fromARGB(255, 64, 224, 208),
+                                          Colors.blue,
+                                        ],
                                       ),
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          if (_formKey.currentState!.validate()) {
-                                            //what happened when press the button when all form is validate
-                                            try {
-                                              await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                                email: user.email!,
-                                                password: _oldPasswordController.text,
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          //what happened when press the button when all form is validate
+                                          try {
+                                            await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                              email: user.email!,
+                                              password: _oldPasswordController.text,
+                                            );
+
+                                            user.updatePassword(_reNewPasswordController.text).then((_){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('Successfully changed password'),
+                                                    backgroundColor: Colors.black,
+                                                  )
                                               );
 
-                                              user.updatePassword(_reNewPasswordController.text).then((_){
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                    const SnackBar(content: Text('Successfully changed password'),
-                                                      backgroundColor: Colors.black,
-                                                    )
-                                                );
+                                              Navigator.pop(context);
 
-                                                Navigator.pop(context);
+                                            }).catchError((error){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('Something went wrong please try again later'),
+                                                    backgroundColor: Colors.red,
+                                                  )
+                                              );
 
-                                              }).catchError((error){
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                    const SnackBar(content: Text('Something went wrong please try again later'),
-                                                      backgroundColor: Colors.red,
-                                                    )
-                                                );
-
-                                                if (kDebugMode) {
-                                                  print("Password can't be changed$error");
-                                                }
-                                                //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
-                                              });
-                                            } on FirebaseAuthException catch (e) {
-                                              if (e.code == 'user-not-found') {
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                    const SnackBar(content: Text('No user found'),
-                                                      backgroundColor: Colors.red,
-                                                    )
-                                                );
-                                              } else if (e.code == 'wrong-password') {
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                    const SnackBar(content: Text('Wrong password provided'),
-                                                      backgroundColor: Colors.red,
-                                                    )
-                                                );
+                                              if (kDebugMode) {
+                                                print("Password can't be changed$error");
                                               }
+                                              //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+                                            });
+                                          } on FirebaseAuthException catch (e) {
+                                            if (e.code == 'user-not-found') {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('No user found'),
+                                                    backgroundColor: Colors.red,
+                                                  )
+                                              );
+                                            } else if (e.code == 'wrong-password') {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('Wrong password provided'),
+                                                    backgroundColor: Colors.red,
+                                                  )
+                                              );
                                             }
                                           }
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.transparent,
-                                            fixedSize: const Size(300, 60),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(25))),
-                                        child: const Text('Confirm'),
-                                      ),
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          backgroundColor: Colors.transparent,
+                                          fixedSize: const Size(300, 60),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(25))),
+                                      child: const Text('Confirm'),
                                     ),
                                   ),
                                   const SizedBox(height: 15),

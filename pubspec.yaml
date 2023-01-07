@@ -37,11 +37,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
 
+  rename: ^2.0.1
 
   #nosql
-  cloud_firestore: ^4.3.0
-  firebase_auth: ^4.2.3
-  firebase_core: ^2.4.0
+  cloud_firestore: ^4.3.1
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.4.1
 
   #bloc
   flutter_bloc: ^8.1.1
@@ -56,10 +57,10 @@ dependencies:
 
   #check internet connection
   internet_connection_checker: ^1.0.0+1
-  firebase_app_check: ^0.1.1+7
+  firebase_app_check: ^0.1.1+8
 
   #graph
-  syncfusion_flutter_charts: ^20.4.38
+  syncfusion_flutter_charts: ^20.4.42
 
   #navBar
   persistent_bottom_nav_bar: ^5.0.2
@@ -81,7 +82,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.1
   date_field: ^3.0.2
 
-  datepicker_dropdown: ^0.0.7+2
+  datepicker_dropdown: ^0.0.7+3
   flutter_picker: any
 
   date_time_picker: ^2.1.0
@@ -91,12 +92,13 @@ dependencies:
   #firestore cache (custom: not from google)
   firestore_cache: ^2.3.0
 
+
   #convert to pdf
   pdf: ^3.8.4
   #open pdf document
   open_file: ^3.2.1
 
-  huawei_safetydetect: ^6.4.0+301
+  huawei_safetydetect: ^6.4.0+302
 
   intl: any
 
@@ -104,7 +106,25 @@ internet_connection_checker: ^1.0.0+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.11.0
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/appicon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/appicon.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/appicon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/appicon.png"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -117,6 +137,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

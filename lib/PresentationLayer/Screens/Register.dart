@@ -88,7 +88,7 @@ class _Register extends State<Register> {
                             width: 169,
                             decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/Icon.png'),
+                                    image: AssetImage('assets/appicon.png'),
                                     fit: BoxFit.fill)),
                           ),
                         ),
@@ -144,18 +144,18 @@ class _Register extends State<Register> {
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topRight,
-                                          end: Alignment.bottomLeft,
-                                          colors: [
-                                            Color.fromARGB(255, 64, 224, 208),
-                                            Colors.blue,
-                                          ],
-                                        ),
+                                          0.7,  decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topRight,
+                                        end: Alignment.bottomLeft,
+                                        colors: [
+                                          Color.fromARGB(255, 64, 224, 208),
+                                          Colors.blue,
+                                        ],
                                       ),
+                                    ),
+
                                       child: ElevatedButton(
                                         onPressed: () {
                                           if (_formKey.currentState!
