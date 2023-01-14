@@ -244,7 +244,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
         return null;
       },
       decoration: const InputDecoration(
-        label: Text('Phone Number'),
+        label: Text('Email'),
       ),
       onSaved: (val) => emailFinal = val!,
     );

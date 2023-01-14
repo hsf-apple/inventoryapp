@@ -245,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
         return null;
       },
       decoration: const InputDecoration(
-        label: Text('Phone Number'),
+        label: Text('Email'),
       ),
       onSaved: (val) => emailFinal = val!,
     );
