@@ -21,17 +21,38 @@ class UserRepository {
 
     if( userModel.email != email)
       {
-        // Get a reference to the old document
-        final oldDocRef = db.doc(email);
-        await oldDocRef.delete();
+        switch(userModel.isAdmin) {
+          case true:
+          {
+            // Get a reference to the old document
+            final oldDocRef = db.doc(email);
+            await oldDocRef.delete();
 
-        // Create a new document with the desired ID
-        await db.doc(userModel.email).set({
-          'name': userModel.name,
-          'email': userModel.email,
-          'telNumber': userModel.telNumber,
-          'isAdmin': false,
-        });
+            // Create a new document with the desired ID
+            await db.doc(userModel.email).set({
+              'name': userModel.name,
+              'email': userModel.email,
+              'telNumber': userModel.telNumber,
+              'isAdmin': true,
+            });
+          }
+            break;
+          default:{
+            // Get a reference to the old document
+            final oldDocRef = db.doc(email);
+            await oldDocRef.delete();
+
+            // Create a new document with the desired ID
+            await db.doc(userModel.email).set({
+              'name': userModel.name,
+              'email': userModel.email,
+              'telNumber': userModel.telNumber,
+              'isAdmin': false,
+            });
+          }
+
+        }
+
         return;
       }
     else

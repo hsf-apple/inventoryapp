@@ -7,6 +7,8 @@ import '../../../../BusinessLayer/AuthBloc/auth_bloc.dart';
 import '../../../../BusinessLayer/Manage User/user_bloc.dart';
 import '../../Login.dart';
 import '../AcknowledgementDelivery/AcknowledgmentDelivery.dart';
+import '../AcknowledgementDelivery/Approved/AcknoledgetmentDeliveryApproved.dart';
+import '../AcknowledgementDelivery/Denied/AchnowledgementDeliveryDenied.dart';
 
 class AdminMainPage extends StatefulWidget {
   const AdminMainPage({Key? key}) : super(key: key);
@@ -159,20 +161,27 @@ class _AdminMainPageState extends State<AdminMainPage> {
                         ],
                       ),
                     ),
-                    child: Card(
-                        color:  Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 0,
-                        shadowColor: Colors.black
-                        ,child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [const Text("Pending",
-                          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                        , Text(countDelivery[0].toString())],
-                    )),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  const AcknowledgmentDelivery()));
+                      },
+                      child: Card(
+                          color:  Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          elevation: 0,
+                          shadowColor: Colors.black
+                          ,child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [const Text("Pending",
+                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                          , Text(countDelivery[0].toString())],
+                      )),
+                    ),
                   ),
                 ),
                 Padding(
@@ -189,20 +198,27 @@ class _AdminMainPageState extends State<AdminMainPage> {
                         ],
                       ),
                     ),
-                    child: Card(
-                        color:  Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 0,
-                        shadowColor: Colors.black,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [const Text("Denied",
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                            , Text(countDelivery[2].toString())],
-                        )),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  const AcknowledgmentDeliveryDenied()));
+                      },
+                      child: Card(
+                          color:  Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          elevation: 0,
+                          shadowColor: Colors.black,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [const Text("Denied",
+                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                              , Text(countDelivery[2].toString())],
+                          )),
+                    ),
                   ),
                 ),
                 Padding(
@@ -219,20 +235,27 @@ class _AdminMainPageState extends State<AdminMainPage> {
                         ],
                       ),
                     ),
-                    child: Card(
-                        color:   Colors.transparent,
-                        elevation:0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  const AcknowledgmentDeliveryApproved()));
+                      },
+                      child: Card(
+                          color:   Colors.transparent,
+                          elevation:0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
 
-                        shadowColor: Colors.black,child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [const Text("Approved",
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                            , Text(countDelivery[1].toString())],
-                        )),
+                          shadowColor: Colors.black,child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [const Text("Approved",
+                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
+                              , Text(countDelivery[1].toString())],
+                          )),
+                    ),
                   ),
                 ),
               ],
@@ -296,21 +319,33 @@ class _AdminMainPageState extends State<AdminMainPage> {
                   ),
                   height: 20,
                   child: Card(
-                      color: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      elevation: 0,
-                      shadowColor: Colors.black,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [const Text("Digital Multimeter",
-                            textAlign: TextAlign.center, // Align the text to the center
-                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                          , const SizedBox(height: 10,),
-                          Text(countEquipment[0].toString())],
-                      )),
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 0,
+                    shadowColor: Colors.black,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text("Digital Multimeter",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10,),
+                        Expanded(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              countEquipment[0].toString(),
+                              softWrap: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                  ,
                 ),),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -327,53 +362,34 @@ class _AdminMainPageState extends State<AdminMainPage> {
                       ),
                     ),
                     height: 20,
-                    child: Card(  color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 0,
-                        shadowColor: Colors.black,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [const Text("Digital Pressure Meter",
-                              textAlign: TextAlign.center, // Align the text to the center
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                            ,const SizedBox(height: 10,),
-                            Text(countEquipment[1].toString())],
-                        )),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Color.fromARGB(255, 64, 224, 208),
-                          Colors.blue,
+                    child: Card(
+                      color: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 0,
+                      shadowColor: Colors.black,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text("Digital Pressure Meter",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 10,),
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                countEquipment[1].toString(),
+                                softWrap: true,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    height: 20,
-                    child: Card(  color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 0,
-                        shadowColor: Colors.black,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [const Text("Electrical Safety Analyzer",
-                              textAlign: TextAlign.center, // Align the text to the center
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                            ,const SizedBox(height: 10,),
-                            Text(countEquipment[2].toString())],
-                        )),
+                    )
+                    ,
                   ),
                 ),
                 Padding(
@@ -392,22 +408,78 @@ class _AdminMainPageState extends State<AdminMainPage> {
                     ),
                     height: 20,
                     child: Card(
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 0,
-                        shadowColor: Colors.black,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [const Text("Thermocouple Type K",
-                              textAlign: TextAlign.center, // Align the text to the center
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))
-                            ,
-                            const SizedBox(height: 10,),
-                            Text(countEquipment[3].toString())],
-                        )),
+                      color: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 0,
+                      shadowColor: Colors.black,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text("Electrical Safety Analyzer",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 10,),
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                countEquipment[2].toString(),
+                                softWrap: true,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    ,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 64, 224, 208),
+                          Colors.blue,
+                        ],
+                      ),
+                    ),
+                    height: 20,
+                    child: Card(
+                      color: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 0,
+                      shadowColor: Colors.black,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text("Thermocouple Type K",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 10,),
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                countEquipment[3].toString(),
+                                softWrap: true,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    ,
                   ),
                 ),
               ],

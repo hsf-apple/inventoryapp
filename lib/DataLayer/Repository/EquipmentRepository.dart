@@ -170,6 +170,50 @@ class EquipmentRepository {
     }
   }
 
+  ///get list of all equipment from specific user
+  Future<List<DeliveryModel>> getAllListDeliveryStatusForAdminDenied() async
+  {
+    List<DeliveryModel> equipmentLab = [];
+    try {
+      final value = await FirebaseFirestore.instance.collection(
+          "delivery").get();
+      for (var value in value.docs) {
+        var details = value.data();
+
+        if (details["acknowledgmentStatus"] == "Denied") {
+          equipmentLab.add(DeliveryModel.fromJson(value.data()));
+        }
+      }
+      return equipmentLab;
+    } on FirebaseException catch (e) {
+      return equipmentLab;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  ///get list of all equipment from specific user
+  Future<List<DeliveryModel>> getAllListDeliveryStatusForAdminApprove() async
+  {
+    List<DeliveryModel> equipmentLab = [];
+    try {
+      final value = await FirebaseFirestore.instance.collection(
+          "delivery").get();
+      for (var value in value.docs) {
+        var details = value.data();
+
+        if (details["acknowledgmentStatus"] == "Approved") {
+          equipmentLab.add(DeliveryModel.fromJson(value.data()));
+        }
+      }
+      return equipmentLab;
+    } on FirebaseException catch (e) {
+      return equipmentLab;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
 
   ///get real-time data from firestore for staff main page
   Stream<QuerySnapshot> dataStream() {

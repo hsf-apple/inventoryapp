@@ -17,3 +17,17 @@ class GetListEquipmentDeliveryAdmin extends DeliveryEvent{
   @override
   List<Object?> get props => [];
 }
+
+/// get  equipment list for admin (acknowledgment status == denied)
+class GetListEquipmentDeliveryAdminDenied extends DeliveryEvent{
+  const GetListEquipmentDeliveryAdminDenied();
+  @override
+  List<Object?> get props => [];
+}
+
+/// get  equipment list for admin (acknowledgment status == approve)
+class GetListEquipmentDeliveryAdminApproved extends DeliveryEvent{
+  const GetListEquipmentDeliveryAdminApproved();
+  @override
+  List<Object?> get props => [];
+}

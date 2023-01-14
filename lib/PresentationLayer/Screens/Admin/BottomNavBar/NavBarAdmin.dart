@@ -83,6 +83,6 @@ class _NavBarAdminState extends State<NavBarAdmin> {
               popAllScreensOnTapOfSelectedTab: true,
               navBarStyle: NavBarStyle.style13,
             )),
-        onWillPop: () async => false);
+        onWillPop: () async => true);
   }
 }

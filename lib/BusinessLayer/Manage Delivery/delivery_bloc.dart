@@ -28,5 +28,17 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       emit(ListEquipmentDeliveryAdminLoad(listEquipment));
     });
 
+    /// display list of Equipment for admin ( acknowledgment Status = "denied")
+    on<GetListEquipmentDeliveryAdminDenied>((event, emit) async {
+      var listEquipment = await equipmentProvider.getAllListDeliveryStatusForAdminDenied();
+      emit(ListEquipmentDeliveryAdminLoad(listEquipment));
+    });
+
+    /// display list of Equipment for admin ( acknowledgment Status = "Approve")
+    on<GetListEquipmentDeliveryAdminApproved>((event, emit) async {
+      var listEquipment = await equipmentProvider.getAllListDeliveryStatusForAdminApproved();
+      emit(ListEquipmentDeliveryAdminLoad(listEquipment));
+    });
+
   }
 }

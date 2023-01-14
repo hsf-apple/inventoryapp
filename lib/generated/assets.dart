@@ -8,6 +8,8 @@ class Assets {
   static const String AcknowledgementDeliveryAcknowledgmentDelivery = 'lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/AcknowledgmentDelivery.dart';
   static const String AdminAdminEquipmentForm = 'lib/PresentationLayer/Screens/Admin/AdminEquipmentForm.dart';
   static const String AdminAdminHomeScreen = 'lib/PresentationLayer/Screens/Admin/AdminHomeScreen.dart';
+  static const String ApprovedAcknoledgetmentDeliveryApproved = 'lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/Approved/AcknoledgetmentDeliveryApproved.dart';
+  static const String ApprovedAcknoledgmentDetailsApproved = 'lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/Approved/AcknoledgmentDetailsApproved.dart';
   static const String AttendanceBlocAttendanceBloc = 'lib/BusinessLayer/AttendanceBloc/attendance_bloc.dart';
   static const String AttendanceBlocAttendanceEvent = 'lib/BusinessLayer/AttendanceBloc/attendance_event.dart';
   static const String AttendanceBlocAttendanceState = 'lib/BusinessLayer/AttendanceBloc/attendance_state.dart';
@@ -19,6 +21,8 @@ class Assets {
   static const String BottomNavBarNavBarStaff = 'lib/PresentationLayer/Screens/Staff/BottomNavBar/NavBarStaff.dart';
   static const String DataMainPageAdminMainPage = 'lib/PresentationLayer/Screens/Admin/DataMainPage/AdminMainPage.dart';
   static const String DeliveryDetailsDeliveryDetailsStaff = 'lib/PresentationLayer/Screens/Staff/DeliveryDetails/DeliveryDetailsStaff.dart';
+  static const String DeniedAchnowledgementDeliveryDenied = 'lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/Denied/AchnowledgementDeliveryDenied.dart';
+  static const String DeniedAcknowledgementDetailsDenied = 'lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/Denied/AcknowledgementDetailsDenied.dart';
   static const String EquipementAdminDummyEquipmentList = 'lib/PresentationLayer/Screens/Admin/EquipementAdmin/dummyEquipmentList.dart';
   static const String EquipementAdminEquipementAdd = 'lib/PresentationLayer/Screens/Admin/EquipementAdmin/EquipementAdd.dart';
   static const String EquipementAdminEquipementList = 'lib/PresentationLayer/Screens/Admin/EquipementAdmin/EquipementList.dart';

@@ -19,6 +19,16 @@ class EquipmentProvider {
      return equipmentRepository.getAllListDeliveryStatusForAdmin();
    }
 
+   ///for admin ( get equipment list (delivery form == denied ) )
+   Future<List<DeliveryModel>> getAllListDeliveryStatusForAdminDenied() {
+     return equipmentRepository.getAllListDeliveryStatusForAdminDenied();
+   }
+
+   ///for admin ( get equipment list (delivery form == approved ) )
+   Future<List<DeliveryModel>> getAllListDeliveryStatusForAdminApproved() {
+     return equipmentRepository.getAllListDeliveryStatusForAdminApprove();
+   }
+
 
    Stream<DocumentSnapshot<Object?>> getSpecificEquipment(String serialNo) {
      return equipmentRepository.getSpecificEquipment(serialNo);
