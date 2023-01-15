@@ -177,8 +177,5 @@ class _AcknowledgmentDeliveryApproved extends State<AcknowledgmentDeliveryApprov
    ),
     );
   }
-
-
-
 }
 

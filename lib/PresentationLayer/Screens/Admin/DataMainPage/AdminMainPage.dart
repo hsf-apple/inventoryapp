@@ -125,19 +125,19 @@ class _AdminMainPageState extends State<AdminMainPage> {
             children: [
               const Text("Delivery",
                 style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>  const AcknowledgmentDelivery()));
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor:Colors.black,
-                    maximumSize: const Size(300, 60),
-                    shape:
-                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
-                child: const Text('Delivery List'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) =>  const AcknowledgmentDelivery()));
+              //   },
+              //   style: ElevatedButton.styleFrom(
+              //       backgroundColor:Colors.black,
+              //       maximumSize: const Size(300, 60),
+              //       shape:
+              //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
+              //   child: const Text('Delivery List'),
+              // ),
             ],
           ),
           SizedBox(
@@ -152,15 +152,17 @@ class _AdminMainPageState extends State<AdminMainPage> {
                   child: Container(
                     decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Color.fromARGB(255, 64, 224, 208),
-                          Colors.blue,
-                        ],
-                      ),
+                      // gradient: LinearGradient(
+                      //   begin: Alignment.topRight,
+                      //   end: Alignment.bottomLeft,
+                      //   colors: [
+                      //     Color.fromARGB(255, 64, 224, 208),
+                      //     Colors.blue,
+                      //   ],
+                      // ),
+                      color:  Color.fromRGBO(55, 146, 203, 1),
                     ),
+
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -189,14 +191,15 @@ class _AdminMainPageState extends State<AdminMainPage> {
                   child: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Color.fromARGB(255, 64, 224, 208),
-                          Colors.blue,
-                        ],
-                      ),
+                      // gradient: LinearGradient(
+                      //   begin: Alignment.topRight,
+                      //   end: Alignment.bottomLeft,
+                      //   colors: [
+                      //     Color.fromARGB(255, 64, 224, 208),
+                      //     Colors.blue,
+                      //   ],
+                      // ),
+                      color: Color(0xFFFF2400),
                     ),
                     child: GestureDetector(
                       onTap: () {
@@ -226,14 +229,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
                   child: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Color.fromARGB(255, 64, 224, 208),
-                          Colors.blue,
-                        ],
-                      ),
+                     color: Color(0xFF1E90FF),
                     ),
                     child: GestureDetector(
                       onTap: () {
