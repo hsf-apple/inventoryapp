@@ -6,20 +6,20 @@ import '../../DataLayer/Model/DeliveryModel.dart';
 
 Future<void> sendQueryReminderNotification(
     DeliveryModel deliveryModel) async {
-      DateTime value = DateTime.now();
+  DateTime value = DateTime.now();
 
-      DateTime value1 =  value;
-      // Add 3 seconds to the current date and time
-      DateTime newTime = value1.add(const Duration(seconds: 6));
+  DateTime value1 =  value;
+  // Add 3 seconds to the current date and time
+  DateTime newTime = value1.add(const Duration(seconds: 6));
 
 
-      // Create a new Random object
-      final random = Random();
+  // Create a new Random object
+  final random = Random();
 
-      // Generate a random and unique integer value
-      int randomInt = random.nextInt(1000000);
+  // Generate a random and unique integer value
+  int randomInt = random.nextInt(1000000);
 
-      await AwesomeNotifications().createNotification(
+  await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: randomInt,
         groupKey: '${deliveryModel.equipmentName} ${deliveryModel.serialNo}' ,

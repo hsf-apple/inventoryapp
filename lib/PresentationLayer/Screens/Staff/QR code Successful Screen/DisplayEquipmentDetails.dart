@@ -19,6 +19,9 @@ class _DisplayEquipmentDetailsState extends State<DisplayEquipmentDetails> {
   EquipmentBloc equipmentBloc = EquipmentBloc();
 
 
+
+
+
   @override
   Widget build(BuildContext context) {
     final todo = ModalRoute.of(context)?.settings.arguments as Map;

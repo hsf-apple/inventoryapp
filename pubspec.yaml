@@ -100,6 +100,7 @@ dependencies:
 
   huawei_safetydetect: ^6.4.0+302
 
+
   intl: any
 
 internet_connection_checker: ^1.0.0+1
@@ -216,4 +217,7 @@ flutter:
     - lib/PresentationLayer/Screens/Admin/About/Password/
     - lib/main.dart
     - assets/
+    - lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/Denied/
+    - lib/PresentationLayer/Screens/Admin/AcknowledgementDelivery/Approved/
+    - lib/PresentationLayer/Screens/Staff/Equipment/
 

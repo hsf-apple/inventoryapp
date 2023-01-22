@@ -22,12 +22,7 @@ class _Login extends State<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-
-
-
   @override
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -40,8 +35,7 @@ class _Login extends State<Login> {
             ///but if no internet connection
             ///cant access this app
             try {
-              bool result =
-              await InternetConnectionChecker().hasConnection;
+              bool result = await InternetConnectionChecker().hasConnection;
               if (result == true) {
                 await checkUserLogin(context);
               } else {
@@ -51,8 +45,7 @@ class _Login extends State<Login> {
                     title: const Text('No Internet Connection'),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () =>
-                            Navigator.pop(context, 'Cancel'),
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
                         child: const Text('Cancel'),
                       ),
                       TextButton(
@@ -89,20 +82,23 @@ class _Login extends State<Login> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      'Sign In',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 4, 52, 84)),
-                    ),
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        'Welcome to AdvanceCalLab',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 4, 52, 84)),
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.width * 0.20,
                 ),
-
                 Form(
                     key: _formKey,
                     child: Padding(
@@ -124,32 +120,35 @@ class _Login extends State<Login> {
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: Material(
                               elevation: 8,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
                               child: Container(
                                   decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25)),
                                     gradient: LinearGradient(
                                       begin: Alignment.topRight,
                                       end: Alignment.bottomLeft,
                                       colors: [
-           Color.fromARGB(255, 64, 224, 208),
+                                        Color.fromARGB(255, 64, 224, 208),
                                         Colors.blue,
                                       ],
                                     ),
                                   ),
-                                  child:ElevatedButton(
+                                  child: ElevatedButton(
                                     onPressed: () {
-                                      _authenticateWithEmailAndPassword(context);
+                                      _authenticateWithEmailAndPassword(
+                                          context);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         elevation: 0,
                                         primary: Colors.transparent,
                                         fixedSize: const Size(300, 60),
-                                        shape:
-                                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(50))),
                                     child: const Text('Sign In'),
-                                  )
-                              ),
+                                  )),
                             ),
                           ),
                           const SizedBox(
@@ -162,15 +161,13 @@ class _Login extends State<Login> {
                               GestureDetector(
                                 child: const Text('Register',
                                     style: TextStyle(
-                                        decoration:
-                                        TextDecoration.underline,
+                                        decoration: TextDecoration.underline,
                                         color: Colors.blue)),
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                        const Register()),
+                                        builder: (context) => const Register()),
                                   );
                                 },
                               )
@@ -181,7 +178,6 @@ class _Login extends State<Login> {
                     )),
               ]),
             );
-
           }
           return Container();
         }),
@@ -199,7 +195,10 @@ class _Login extends State<Login> {
         //hintText: 'Username',
         hintText: 'email',
         hintStyle: TextStyle(color: Colors.black54),
-        icon: Icon(Icons.person, color: Colors.black,),
+        icon: Icon(
+          Icons.person,
+          color: Colors.black,
+        ),
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
@@ -214,11 +213,16 @@ class _Login extends State<Login> {
     return TextFormField(
       controller: _passwordController,
       obscureText: true,
-      style:  const TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
-      decoration:
-      const InputDecoration(hintStyle: TextStyle(color: Colors.black54),hintText: 'password', icon: Icon(Icons.security, color: Colors.black,)),
+      decoration: const InputDecoration(
+          hintStyle: TextStyle(color: Colors.black54),
+          hintText: 'password',
+          icon: Icon(
+            Icons.security,
+            color: Colors.black,
+          )),
     );
   }
 
@@ -232,7 +236,7 @@ class _Login extends State<Login> {
           primary: Colors.green,
           fixedSize: const Size(300, 60),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
       child: const Text('Login'),
     );
   }
@@ -246,31 +250,24 @@ class _Login extends State<Login> {
   }
 }
 
-
 ///to check if user or admin
 checkUserLogin(context) async {
-
   bool userStatus = await checkUserStatus();
   switch (userStatus) {
     case false:
       {
         print("user status if is true: $userStatus");
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (_) => const NavBarStaff()));
+            context, MaterialPageRoute(builder: (_) => const NavBarStaff()));
       }
       break;
     default:
       {
         print("user status if is false: $userStatus");
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (_) => const NavBarAdmin()));
+            context, MaterialPageRoute(builder: (_) => const NavBarAdmin()));
       }
   }
-
 }
 
 checkUserStatus() async {

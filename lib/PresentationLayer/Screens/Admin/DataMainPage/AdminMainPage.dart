@@ -41,7 +41,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
   Widget build(BuildContext context) {
     return  SafeArea(child: Scaffold(
       appBar: AppBar(
-        title:const Text('Main Page', style: TextStyle(color: Colors.black),),
+        title:const Text('Dashboard AdvanceCalLab', style: TextStyle(color: Colors.black),),
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -160,7 +160,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
                       //     Colors.blue,
                       //   ],
                       // ),
-                      color:  Color.fromRGBO(55, 146, 203, 1),
+                      color:  Color.fromRGBO(245, 241, 11, 1.0),
                     ),
 
                     child: GestureDetector(

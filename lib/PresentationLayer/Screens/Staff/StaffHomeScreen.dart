@@ -62,7 +62,7 @@ class _State extends State<StaffHomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Home Page',
+            'Dashboard AdvanceCalLab',
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
